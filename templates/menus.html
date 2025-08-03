@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Our Products - Freshmo Brands 🛍️{% endblock %}
+{% block content %}
+    <section class="products-section">
+        <p><a href="{{ url_for('home') }}" class="btn-back">Back ⬅️🏠</a></p>
+        <h1>Our Freshmo Products! ✨🛍️</h1>
+        <p>Explore our innovative oral care solutions designed for "Freshness on the Go"! 💧🚀</p>
+        <div class="category-list">
+            {% for category_name, category_data in categories.items() %}
+                <div class="category-item">
+                    <h2>{{ category_name }} 🌟</h2>
+                    <p>{{ category_data.description }} 😊</p>
+                    <p><a href="{{ url_for('show_menu_category', category_name=category_name|replace(' ', '_')) }}" class="btn">View {{ category_name }} ➡️</a></p>
+                </div>
+            {% endfor %}
+        </div>
+        <p><a href="{{ url_for('view_cart') }}" class="btn">View Your Cart 🛒🎉</a></p>
+    </section>
+{% endblock %}

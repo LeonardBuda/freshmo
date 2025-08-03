@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Track Your Order - Freshmo Brands 🚚📦{% endblock %}
+{% block content %}
+    <p class="text-center mb-6">
+        <a href="{{ url_for('shop.menus') }}" class="text-[#00897B] hover:underline transition-colors duration-300">Back to Products ⬅️</a>
+    </p>
+    <h1 class="text-3xl font-bold text-[#263238] mb-6 text-center">Track Your Freshmo Order 🚚📦</h1>
+    <p class="text-lg text-center leading-relaxed text-[#455A64] mb-8">
+        Enter your order number or phone number to get the latest update on your delivery or collection.
+    </p>
+
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-[#00BFA5] max-w-md mx-auto">
+        <form action="{{ url_for('main.track_order') }}" method="POST">
+            <div class="mb-4">
+                <label for="order_number" class="block text-sm font-medium text-gray-700">Order Number (Optional)</label>
+                <input type="text" id="order_number" name="order_number"
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#00BFA5] focus:border-[#00BFA5]">
+            </div>
+            <div class="mb-6">
+                <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number (Optional)</label>
+                <input type="tel" id="phone" name="phone"
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#00BFA5] focus:border-[#00BFA5]">
+                <p class="mt-1 text-sm text-gray-500">Provide at least one of the above.</p>
+            </div>
+            <button type="submit" class="w-full bg-[#00BFA5] text-white py-3 rounded-lg font-bold text-lg hover:bg-[#00897B] transition-colors duration-300 shadow-md">
+                Track Order 🔍
+            </button>
+        </form>
+    </div>
+
+    <p class="mt-10 text-center">
+        <a href="{{ url_for('shop.menus') }}" class="text-[#00897B] hover:underline transition-colors duration-300">Back to Products ⬅️</a>
+    </p>
+{% endblock %}

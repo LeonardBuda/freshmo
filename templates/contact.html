@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Contact Us - Freshmo Brands 📞📧{% endblock %}
+{% block content %}
+    <section class="products-section">
+        <p><a href="{{ url_for('menus') }}" class="btn-back">Back to Products ⬅️</a></p>
+        <h1>Get in Touch with Freshmo! 📞📧</h1>
+        <p>Have questions, feedback, or just want to say hello? We'd love to hear from you!</p>
+        <form method="POST" action="{{ url_for('contact') }}" class="checkout-form">
+            <label for="name">Your Name *</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Your Email *</label>
+            <input type="email" id="email" name="email" required>
+            <label for="phone">Phone Number (Optional)</label>
+            <input type="tel" id="phone" name="phone">
+            <label for="subject">Subject *</label>
+            <input type="text" id="subject" name="subject" required>
+            <label for="message">Your Message *</label>
+            <textarea id="message" name="message">{{ message if message else '' }}</textarea>
+            <button type="submit" class="btn">Send Message 🚀</button>
+        </form>
+        <h2>Other Ways to Connect:</h2>
+        <p>Email: <a href="mailto:freshmobrands@outlook.com">freshmobrands@outlook.com</a></p>
+        <p>Contact: Paul Masilo, <a href="tel:+27842737821">+27842737821</a></p>
+        <p>WhatsApp: <a href="https://wa.me/27842737821">Chat with us on WhatsApp</a></p>
+        <p>Website: <a href="https://freshmo.co.za">https://freshmo.co.za</a></p>
+        <p>Address: 27 Parakeet Street, Villa Lisa, Boksburg, 1459, South Africa 📍</p>
+        <p><a href="{{ url_for('menus') }}" class="btn-back">Back to Products ⬅️</a></p>
+    </section>
+{% endblock %}

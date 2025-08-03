@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Rate Us - Freshmo Brands ⭐✍️{% endblock %}
+{% block content %}
+    <div class="container">
+        <p><a href="{{ url_for('menus') }}">Back to Products ⬅️🛍️</a></p>
+        <h1>Rate Your Freshmo Experience! ⭐✍️</h1>
+        <p>Your feedback helps us grow and serve you better. Please share your thoughts! 🌟😊</p>
+        <form method="POST">
+            <label for="product">Product (Optional) 📦</label>
+            <input type="text" name="product" id="product">
+            <label for="rating">Your Rating * ⭐</label>
+            <select name="rating" id="rating" required>
+                <option value="5" selected>★★★★★</option>
+                <option value="4">★★★★</option>
+                <option value="3">★★★</option>
+                <option value="2">★★</option>
+                <option value="1">★</option>
+            </select>
+            <label for="review">Your Review * 💬</label>
+            <textarea name="review" id="review" required></textarea>
+            <label for="name">Your Name (Optional) 👤</label>
+            <input type="text" name="name" id="name">
+            <button type="submit">Submit Review ⭐🚀</button>
+        </form>
+        <p>Your honest feedback is highly appreciated! Thank you for helping us grow. 🙏🌟</p>
+        <p><a href="{{ url_for('menus') }}">Back to Products ⬅️🛍️</a></p>
+    </div>
+{% endblock %}

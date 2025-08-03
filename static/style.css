@@ -1,0 +1,363 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.header {
+    background-color: #007bff;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 60px; /* Matches navbar height */
+    margin-left: 10px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #ffd700;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.products-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hero {
+    background-image: url('/static/background.jpg');
+    background-size: contain; /* Ensure full image is visible */
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 3rem;
+    text-align: center;
+    color: white;
+    border-radius: 8px;
+    min-height: 100vh; /* Ensure hero section covers viewport */
+}
+
+.hero-content {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.welcome-text {
+    color: #ff6200; /* Bright orange */
+    font-weight: bold;
+}
+
+.category-list, .product-list, .faq-list, .gallery-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.category-item, .product-item, .faq-item {
+    background-color: #f1f1f1;
+    padding: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.category-item:hover, .product-item:hover, .faq-item:hover {
+    background-color: #e0e0e0;
+}
+
+.gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.gallery-img {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-img:hover {
+    transform: scale(1.05);
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    margin-top: 1rem;
+}
+
+.checkout-form label {
+    font-weight: bold;
+}
+
+.checkout-form input, .checkout-form textarea, .checkout-form select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.checkout-form input:focus, .checkout-form textarea:focus, .checkout-form select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.order-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.order-summary {
+    flex: 1;
+    background-color: #f1f1f1;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.btn, .btn-back {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.btn-back {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-back:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.social-media {
+    margin: 0.5rem 0;
+}
+
+.social-icon {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.social-icon.facebook {
+    background-color: #3b5998;
+}
+
+.social-icon.instagram {
+    background-color: #e4405f;
+}
+
+.social-icon.tiktok {
+    background-color: #000000; /* Black for TikTok */
+}
+
+.social-icon:hover {
+    opacity: 0.8;
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+.zar-bots {
+    font-size: 0.8rem;
+    margin: 0.5rem 0 0;
+}
+
+.flash-messages {
+    margin: 1rem 0;
+}
+
+.flash-success {
+    color: green;
+    background-color: #e6ffe6;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.flash-error {
+    color: red;
+    background-color: #ffe6e6;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links li a {
+        display: block;
+        padding: 0.5rem;
+    }
+
+    .logo-img {
+        height: 50px;
+    }
+
+    .hero {
+        padding: 2rem;
+        min-height: 80vh; /* Adjusted for mobile */
+        background-size: contain; /* Ensure full image visibility */
+    }
+
+    .hero-content {
+        padding: 15px;
+    }
+
+    .welcome-text {
+        font-size: 1.2rem; /* Smaller font for mobile */
+    }
+
+    .order-container {
+        flex-direction: column;
+    }
+
+    .products-section {
+        padding: 1rem;
+    }
+
+    .btn, .btn-back {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.6rem 1rem;
+    }
+
+    .category-list, .product-list, .faq-list, .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer {
+        padding: 0.3rem; /* Reduced for mobile */
+    }
+
+    .social-icon {
+        padding: 0.4rem 0.8rem;
+        margin: 0 0.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    .hero {
+        padding: 1.5rem;
+        min-height: 60vh; /* Further adjusted for smaller screens */
+    }
+
+    .hero-content {
+        padding: 10px;
+    }
+
+    .welcome-text {
+        font-size: 1rem; /* Even smaller for small screens */
+    }
+
+    .checkout-form input, .checkout-form textarea, .checkout-form select {
+        font-size: 0.9rem;
+    }
+
+    .footer {
+        font-size: 0.7rem; /* Smaller font for footer */
+    }
+
+    .social-icon {
+        padding: 0.3rem 0.6rem;
+        margin: 0 0.2rem;
+    }
+}

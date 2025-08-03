@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Checkout - Freshmo Brands 🛒💳{% endblock %}
+{% block content %}
+    <section class="products-section">
+        <p><a href="{{ url_for('menus') }}" class="btn-back">Back to Products ⬅️🛍️</a></p>
+        <h1>Checkout 🛒💳✨</h1>
+        <div class="order-container">
+            <div class="order-summary">
+                <h2>Order Summary 🌟📋</h2>
+                <ul>
+                    {% for item in cart_items %}
+                        <li>{{ item.name }} - R{{ item.amount|floatformat(2) }} x {{ item.quantity }} = R{{ item.total|floatformat(2) }} 💸</li>
+                    {% endfor %}
+                </ul>
+                {% if delivery_charge %}
+                    <p>Delivery Charge: R{{ delivery_charge|floatformat(2) }} 🚚</p>
+                {% endif %}
+                <p><strong>Total: R{{ total_amount|floatformat(2) }} 💳</strong></p>
+            </div>
+            <form method="POST" action="{{ url_for('checkout') }}" class="checkout-form">
+                <label for="name">First Name * 👤</label>
+                <input type="text" id="name" name="name" value="{{ remembered_customer.name if remembered_customer else '' }}" required>
+                <label for="phone">Phone Number * 📞</label>
+                <input type="tel" id="phone" name="phone" value="{{ remembered_customer.phone if remembered_customer else '' }}" required>
+                <label for="address">Delivery Address * 🏠</label>
+                <input type="text" id="address" name="address" value="{{ remembered_customer.address if remembered_customer else '' }}" required>
+                <label for="special_note">Special Note (Optional) 📝</label>
+                <textarea id="special_note" name="special_note"></textarea>
+                <label for="payment_method">Payment Method * 💳</label>
+                <select id="payment_method" name="payment_method" required>
+                    <option value="Cash on Collection">Cash on Collection 💵</option>
+                    <option value="Cash on Delivery">Cash on Delivery 🚚</option>
+                    <option value="EFT">EFT 🏦</option>
+                    <option value="Instant Cash">Instant Cash ⚡</option>
+                    <option value="In-App (coming soon)" disabled>In-App (coming soon) 📱</option>
+                </select>
+                <label for="delivery_type">Delivery Type * 🚛</label>
+                <select id="delivery_type" name="delivery_type" required>
+                    <option value="Delivery" {% if remembered_customer.delivery_type == 'Delivery' %}selected{% endif %}>Delivery 🚚</option>
+                    <option value="Collection" {% if remembered_customer.delivery_type == 'Collection' %}selected{% endif %}>Collection 🏬</option>
+                    <option value="PEP Stores" {% if remembered_customer.delivery_type == 'PEP Stores' %}selected{% endif %}>PEP Stores 🏪</option>
+                    <option value="Courier" {% if remembered_customer.delivery_type == 'Courier' %}selected{% endif %}>Courier 📦</option>
+                </select>
+                <label>
+                    <input type="checkbox" name="remember" {% if remembered_customer %}checked{% endif %}>
+                    Remember my details for next time ✅
+                </label>
+                <button type="submit" class="btn">Place Order 🚀🎉</button>
+            </form>
+        </div>
+        <p><a href="{{ url_for('menus') }}" class="btn-back">Back to Products ⬅️🛍️</a></p>
+    </section>
+{% endblock %}

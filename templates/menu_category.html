@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ category_name }} - Freshmo Brands 🛍️{% endblock %}
+{% block content %}
+    <section class="products-section">
+        <p><a href="{{ url_for('menus') }}" class="btn-back">Back to All Products ⬅️🏠</a></p>
+        <h1>{{ category_name }} 💧🌟</h1>
+        <p>Explore our {{ category_name }} products designed for ultimate freshness! 😊🚀</p>
+        <div class="product-list">
+            {% for item in items %}
+                <div class="product-item">
+                    <h2>{{ item.name }} 🌈</h2>
+                    <p>R{{ item.price_zar|floatformat(2) }} 💸</p>
+                    <form method="POST" action="{{ url_for('add_to_cart') }}">
+                        <input type="hidden" name="item_id" value="{{ item.id }}">
+                        <input type="hidden" name="item_name" value="{{ item.name }}">
+                        <input type="hidden" name="item_amount" value="{{ item.price_zar }}">
+                        <label for="quantity-{{ item.id }}">Quantity 📏</label>
+                        <input type="number" id="quantity-{{ item.id }}" name="quantity" value="1" min="1">
+                        <button type="submit" class="btn">Add to Cart 🛒🎉</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+        <p><a href="{{ url_for('view_cart') }}" class="btn">View Your Cart 🛒🎉</a></p>
+    </section>
+{% endblock %}

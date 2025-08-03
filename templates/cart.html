@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Your Cart - Freshmo Brands 🛒🛍️{% endblock %}
+{% block content %}
+    <section class="products-section">
+        <p><a href="{{ url_for('menus') }}" class="btn-back">Back to Products ⬅️</a></p>
+        <h1>Your Shopping Cart 🎉🛒</h1>
+        {% if cart_items %}
+            <div class="cart-items">
+                {% for item in cart_items %}
+                    <div class="cart-item">
+                        <p>{{ item.name }} - R{{ item.amount|floatformat(2) }} x {{ item.quantity }} = R{{ item.total|floatformat(2) }}</p>
+                        <form method="POST" action="{{ url_for('update_cart') }}" class="update-form">
+                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="0" class="quantity-input">
+                            <button type="submit" class="btn">Update</button>
+                        </form>
+                        <form method="POST" action="{{ url_for('remove_from_cart') }}" class="remove-form">
+                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                            <button type="submit" class="btn btn-remove">Remove 🗑️</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+            <p class="total">Total: R{{ total_amount|floatformat(2) }}</p>
+            <div class="cart-actions">
+                <a href="{{ url_for('checkout') }}" class="btn">Checkout ✅</a>
+                <a href="{{ url_for('clear_cart') }}" class="btn btn-remove">Clear Cart 🗑️</a>
+                <a href="{{ url_for('menus') }}" class="btn">Add More Items ➕</a>
+            </div>
+        {% else %}
+            <p>Your cart is empty! Time to fill it up with some Freshmo goodness! 😞</p>
+            <p><a href="{{ url_for('menus') }}" class="btn">Start Shopping Now! 🚀</a></p>
+        {% endif %}
+    </section>
+{% endblock %}

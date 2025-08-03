@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Order Confirmed! - Freshmo Brands 🎉{% endblock %}
+{% block content %}
+    <div class="text-center p-8 bg-white rounded-lg shadow-lg border border-[#00BFA5]">
+        <h1 class="text-4xl font-extrabold text-[#00897B] mb-4">Order Confirmed! 🎉</h1>
+        <p class="text-xl text-[#263238] mb-6">Thank you for your Freshmo order!</p>
+        <p class="text-2xl font-bold text-[#00BFA5] mb-8">Your Order Number: {{ order_id }}</p>
+
+        <p class="text-lg text-gray-700 mb-6">
+            We've received your order and are preparing it for {{ 'delivery' if 'delivery' in request.referrer else 'collection' }}.
+            You will receive updates shortly.
+        </p>
+
+        <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
+            <a href="{{ url_for('main.track_order') }}" class="bg-[#00BFA5] text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-[#00897B] transition-colors duration-300 shadow-md flex items-center justify-center w-full md:w-auto">
+                Track Your Order 🚚
+            </a>
+            <a href="{{ url_for('shop.menus') }}" class="bg-[#4DD0E1] text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-[#26A69A] transition-colors duration-300 shadow-md flex items-center justify-center w-full md:w-auto">
+                Continue Shopping 🛍️
+            </a>
+        </div>
+    </div>
+{% endblock %}
