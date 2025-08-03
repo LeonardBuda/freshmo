@@ -7,19 +7,18 @@ from datetime import datetime
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash
 from firebase_admin import credentials, initialize_app, firestore, get_app
 from dotenv import load_dotenv
-from flask_moment import Moment
 
 load_dotenv()
 
 def create_app():
     app = Flask(__name__, static_folder='static', template_folder='templates')
-    moment = Moment(app)
 
     env = os.environ.get('FLASK_ENV', 'development')
     if env == 'production':
         app.config.from_object('config.ProductionConfig')
     else:
         app.config.from_object('config.DevelopmentConfig')
+    app.context_processor(lambda: {'current_year': datetime.now().year})
 
     def floatformat(value, decimal_places=2):
         try:

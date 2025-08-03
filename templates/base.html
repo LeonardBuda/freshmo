@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>Freshmo Brands</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    {{ moment.include_moment() }}
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
     <header class="header">
-        <nav class="nav">
-            <div class="logo">
-                <a href="{{ url_for('home') }}">Freshmo Brands</a>
-                <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Freshmo Logo" class="logo-img">
-            </div>
+        <div class="logo">
+            <a href="{{ url_for('home') }}" class="logo-link">
+                <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Freshmo Brands">
+                <span>Freshmo Brands</span>
+            </a>
+        </div>
+        <nav>
             <ul class="nav-links">
                 <li><a href="{{ url_for('home') }}">Home 🏠</a></li>
                 <li><a href="{{ url_for('menus') }}">Products 🛍️</a></li>
@@ -26,25 +28,28 @@
             </ul>
         </nav>
     </header>
-    <div class="flash-messages">
+
+    <main>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <div class="main-content">
+                <div class="flash-messages">
                     {% for category, message in messages %}
-                        <div class="flash-{{ category }}">{{ message }}</div>
+                        <div class="flash {{ category }}">{{ message }}</div>
                     {% endfor %}
                 </div>
             {% endif %}
         {% endwith %}
-    </div>
-    {% block content %}{% endblock %}
+
+        {% block content %}{% endblock %}
+    </main>
+
     <footer class="footer">
         <div class="social-media">
             <a href="https://facebook.com/freshmobrands" class="social-icon facebook" target="_blank">Facebook 📘</a>
             <a href="https://instagram.com/freshmobrands" class="social-icon instagram" target="_blank">Instagram 📷</a>
             <a href="https://www.tiktok.com/tag/freshmo?lang=ar" class="social-icon tiktok" target="_blank">TikTok 🎵</a>
         </div>
-        <div>© {{ moment().format('YYYY') }} Freshmo Brands. All Rights Reserved. 🌟</div>
+        <div>© {{ current_year }} Freshmo Brands. All Rights Reserved. 🌟</div>
         <div class="zar-bots">Online Store built by ZARBots 👉🏽 +27766440806</div>
     </footer>
 </body>

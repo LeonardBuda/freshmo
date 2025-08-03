@@ -10,27 +10,31 @@ body {
     background-color: #007bff;
     padding: 1rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
     display: flex;
     align-items: center;
 }
 
-.logo-img {
-    height: 60px; /* Matches navbar height */
+.logo-link {
+    color: #FF6200; /* Bright orange */
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.logo-link span {
     margin-left: 10px;
+}
+
+.logo img {
+    height: 60px;
+    margin-right: 10px;
 }
 
 .nav-links {
@@ -67,14 +71,14 @@ body {
 
 .hero {
     background-image: url('/static/background.jpg');
-    background-size: contain; /* Ensure full image is visible */
+    background-size: 50%;
     background-position: center;
     background-repeat: no-repeat;
     padding: 3rem;
     text-align: center;
     color: white;
     border-radius: 8px;
-    min-height: 100vh; /* Ensure hero section covers viewport */
+    min-height: 80vh;
 }
 
 .hero-content {
@@ -84,8 +88,44 @@ body {
 }
 
 .welcome-text {
-    color: #ff6200; /* Bright orange */
+    color: #FFC107; /* Bright yellow */
     font-weight: bold;
+}
+
+.rate-us-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    margin-top: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 .category-list, .product-list, .faq-list, .gallery-grid {
@@ -260,9 +300,13 @@ body {
 
 /* Mobile Optimization */
 @media (max-width: 768px) {
-    .nav {
+    .header {
         flex-direction: column;
-        align-items: flex-start;
+        padding: 0.5rem;
+    }
+
+    .logo {
+        margin-bottom: 0.5rem;
     }
 
     .nav-links {
@@ -280,14 +324,14 @@ body {
         padding: 0.5rem;
     }
 
-    .logo-img {
+    .logo img {
         height: 50px;
     }
 
     .hero {
         padding: 2rem;
-        min-height: 80vh; /* Adjusted for mobile */
-        background-size: contain; /* Ensure full image visibility */
+        min-height: 60vh;
+        background-size: 50%;
     }
 
     .hero-content {
@@ -295,7 +339,7 @@ body {
     }
 
     .welcome-text {
-        font-size: 1.2rem; /* Smaller font for mobile */
+        font-size: 1.2rem;
     }
 
     .order-container {
@@ -317,12 +361,22 @@ body {
     }
 
     .footer {
-        padding: 0.3rem; /* Reduced for mobile */
+        padding: 0.3rem;
     }
 
     .social-icon {
         padding: 0.4rem 0.8rem;
         margin: 0 0.3rem;
+    }
+
+    .rate-us-form {
+        max-width: 100%;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 0.9rem;
     }
 }
 
@@ -337,7 +391,8 @@ body {
 
     .hero {
         padding: 1.5rem;
-        min-height: 60vh; /* Further adjusted for smaller screens */
+        min-height: 50vh;
+        background-size: 50%;
     }
 
     .hero-content {
@@ -345,15 +400,21 @@ body {
     }
 
     .welcome-text {
-        font-size: 1rem; /* Even smaller for small screens */
+        font-size: 1rem;
     }
 
     .checkout-form input, .checkout-form textarea, .checkout-form select {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 0.8rem;
     }
 
     .footer {
-        font-size: 0.7rem; /* Smaller font for footer */
+        font-size: 0.7rem;
     }
 
     .social-icon {

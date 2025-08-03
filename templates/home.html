@@ -1,18 +1,19 @@
 {% extends "base.html" %}
 {% block title %}Welcome to Freshmo Brands! 🌟{% endblock %}
 {% block content %}
-    <div class="hero">
-        <div class="hero-content">
-            <h1 class="hero-text welcome-text">Welcome to Freshmo Brands! 🎉</h1>
-            <p class="hero-text welcome-text">Your go-to for "Freshness on the Go" with our innovative sachet mouthwash! 💧</p>
-            <a href="{{ url_for('menus') }}" class="btn">Explore Our Products! ➡️🚀</a>
-        </div>
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="welcome-text">Welcome to Freshmo Brands! 🎉</h1>
+        <p class="welcome-text">Your go-to for "Freshness on the Go" with our innovative sachet mouthwash! 💧</p>
+        <a href="{{ url_for('menus') }}" class="btn">Explore Our Products! ➡️🚀</a>
     </div>
-    <div class="main-content">
-        <h2>Why Choose Freshmo? 🤔✨</h2>
-        <p>Freshmo offers convenient, alcohol-free mouthwash in single-use sachets, perfect for your on-the-go lifestyle. Proudly South African and scientifically formulated for a fresh, clean mouth anytime, anywhere! 🇿🇦🌟</p>
-        <p>Combat bad breath, fight plaque, and promote healthy gums with our SABS-tested solution. 🦷👍</p>
-        <a href="{{ url_for('about') }}" class="btn">Learn more about us ✨📖</a>
-        <a href="{{ url_for('menus') }}" class="btn-back">View All Products ⬅️🛍️</a>
-    </div>
+</section>
+
+<section class="products-section">
+    <h2>Why Choose Freshmo? 🤔✨</h2>
+    <p>Freshmo offers convenient, alcohol-free mouthwash in single-use sachets, perfect for your on-the-go lifestyle. Proudly South African and scientifically formulated for a fresh, clean mouth anytime, anywhere! 🇿🇦🌟</p>
+    <p>Combat bad breath, fight plaque, and promote healthy gums with our SABS-tested solution. 🦷👍</p>
+    <a href="{{ url_for('about') }}" class="btn">Learn more about us ✨📖</a>
+    <a href="{{ url_for('menus') }}" class="btn-back">View All Products ⬅️🛍️</a>
+</section>
 {% endblock %}
