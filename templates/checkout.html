@@ -1,53 +1,81 @@
 {% extends "base.html" %}
 {% block title %}Checkout - Freshmo Brands 🛒💳{% endblock %}
 {% block content %}
-    <section class="products-section">
-        <p><a href="{{ url_for('menus') }}" class="btn-back">Back to Products ⬅️🛍️</a></p>
-        <h1>Checkout 🛒💳✨</h1>
-        <div class="order-container">
-            <div class="order-summary">
-                <h2>Order Summary 🌟📋</h2>
-                <ul>
+    <section class="products-section p-6 bg-white rounded-lg shadow-lg border border-[#00BFA5] my-8">
+        <p class="mb-4"><a href="{{ url_for('menus') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back to Products ⬅️🛍️</a></p>
+        <h1 class="text-4xl font-extrabold text-[#263238] mb-4 text-center">Checkout 🛒💳✨</h1>
+        <div class="order-container grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="order-summary bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5]">
+                <h2 class="text-2xl font-bold text-[#263238] mb-4">Order Summary 🌟📋</h2>
+                <ul class="list-disc list-inside mb-4 text-lg text-[#455A64]">
                     {% for item in cart_items %}
-                        <li>{{ item.name }} - R{{ item.amount|floatformat(2) }} x {{ item.quantity }} = R{{ item.total|floatformat(2) }} 💸</li>
+                        <li>
+                            {{ item.name }} (x{{ item.quantity }})
+                            <br>
+                            <span class="ml-4">Price (Excl. VAT): R{{ item.price_excl_vat_per_unit|floatformat(2) }}</span>
+                            <br>
+                            <span class="ml-4">VAT (15%): R{{ item.vat_amount_per_unit|floatformat(2) }}</span>
+                            <br>
+                            <span class="ml-4 font-semibold">Total (Incl. VAT): R{{ item.price_incl_vat_per_unit|floatformat(2) }}</span>
+                            <br>
+                            <span class="ml-4 font-bold">Line Total (Incl. VAT for quantity): R{{ item.total_incl_vat|floatformat(2) }} 💸</span>
+                        </li>
                     {% endfor %}
                 </ul>
+                <hr class="my-4 border-[#00BFA5]">
+                <p class="text-xl font-semibold text-[#263238]">Subtotal (Excl. VAT): R{{ subtotal_excl_vat|floatformat(2) }} 💸</p>
+                <p class="text-xl font-semibold text-[#263238]">Total VAT (15%): R{{ total_vat_amount|floatformat(2) }} 🧾</p>
                 {% if delivery_charge %}
-                    <p>Delivery Charge: R{{ delivery_charge|floatformat(2) }} 🚚</p>
+                    <p class="text-xl font-semibold text-[#263238]">Delivery Charge: R{{ delivery_charge|floatformat(2) }} 🚚</p>
                 {% endif %}
-                <p><strong>Total: R{{ total_amount|floatformat(2) }} 💳</strong></p>
+                <p class="text-3xl font-extrabold text-[#00897B] mt-4"><strong>Grand Total (Incl. VAT): R{{ grand_total_incl_vat|floatformat(2) }} 💳</strong></p>
             </div>
-            <form method="POST" action="{{ url_for('checkout') }}" class="checkout-form">
-                <label for="name">First Name * 👤</label>
-                <input type="text" id="name" name="name" value="{{ remembered_customer.name if remembered_customer else '' }}" required>
-                <label for="phone">Phone Number * 📞</label>
-                <input type="tel" id="phone" name="phone" value="{{ remembered_customer.phone if remembered_customer else '' }}" required>
-                <label for="address">Delivery Address * 🏠</label>
-                <input type="text" id="address" name="address" value="{{ remembered_customer.address if remembered_customer else '' }}" required>
-                <label for="special_note">Special Note (Optional) 📝</label>
-                <textarea id="special_note" name="special_note"></textarea>
-                <label for="payment_method">Payment Method * 💳</label>
-                <select id="payment_method" name="payment_method" required>
-                    <option value="Cash on Collection">Cash on Collection 💵</option>
-                    <option value="Cash on Delivery">Cash on Delivery 🚚</option>
-                    <option value="EFT">EFT 🏦</option>
-                    <option value="Instant Cash">Instant Cash ⚡</option>
-                    <option value="In-App (coming soon)" disabled>In-App (coming soon) 📱</option>
-                </select>
-                <label for="delivery_type">Delivery Type * 🚛</label>
-                <select id="delivery_type" name="delivery_type" required>
-                    <option value="Delivery" {% if remembered_customer.delivery_type == 'Delivery' %}selected{% endif %}>Delivery 🚚</option>
-                    <option value="Collection" {% if remembered_customer.delivery_type == 'Collection' %}selected{% endif %}>Collection 🏬</option>
-                    <option value="PEP Stores" {% if remembered_customer.delivery_type == 'PEP Stores' %}selected{% endif %}>PEP Stores 🏪</option>
-                    <option value="Courier" {% if remembered_customer.delivery_type == 'Courier' %}selected{% endif %}>Courier 📦</option>
-                </select>
-                <label>
-                    <input type="checkbox" name="remember" {% if remembered_customer %}checked{% endif %}>
-                    Remember my details for next time ✅
-                </label>
-                <button type="submit" class="btn">Place Order 🚀🎉</button>
+            <form method="POST" action="{{ url_for('checkout') }}" class="checkout-form bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5]">
+                <h2 class="text-2xl font-bold text-[#263238] mb-4">Your Details 👤</h2>
+                <div class="mb-4">
+                    <label for="name" class="block text-md font-semibold text-[#263238] mb-2">First Name * 👤</label>
+                    <input type="text" id="name" name="name" value="{{ remembered_customer.name if remembered_customer else '' }}" required class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]">
+                </div>
+                <div class="mb-4">
+                    <label for="phone" class="block text-md font-semibold text-[#263238] mb-2">Phone Number * 📞</label>
+                    <input type="tel" id="phone" name="phone" value="{{ remembered_customer.phone if remembered_customer else '' }}" required class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]">
+                </div>
+                <div class="mb-4">
+                    <label for="delivery_type" class="block text-md font-semibold text-[#263238] mb-2">Delivery Type * 🚛</label>
+                    <select id="delivery_type" name="delivery_type" required class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5] bg-white text-gray-700">
+                        <option value="Delivery" {% if remembered_customer.delivery_type == 'Delivery' %}selected{% endif %}>Delivery 🚚</option>
+                        <option value="Collection" {% if remembered_customer.delivery_type == 'Collection' %}selected{% endif %}>Collection 🏬</option>
+                        <option value="PEP Stores" {% if remembered_customer.delivery_type == 'PEP Stores' %}selected{% endif %}>PEP Stores 🏪</option>
+                        <option value="Courier" {% if remembered_customer.delivery_type == 'Courier' %}selected{% endif %}>Courier 📦</option>
+                    </select>
+                </div>
+                <div id="address_field_container" class="mb-4" style="display: {% if remembered_customer.delivery_type == 'Delivery' %}block{% else %}none{% endif %};">
+                    <label for="address" class="block text-md font-semibold text-[#263238] mb-2">Delivery Address * 🏠</label>
+                    <input type="text" id="address" name="address" value="{{ remembered_customer.address if remembered_customer else '' }}" {% if remembered_customer.delivery_type == 'Delivery' %}required{% endif %} class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]">
+                </div>
+                <div class="mb-4">
+                    <label for="special_note" class="block text-md font-semibold text-[#263238] mb-2">Special Note (Optional) 📝</label>
+                    <textarea id="special_note" name="special_note" rows="3" class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]"></textarea>
+                </div>
+                <div class="mb-6">
+                    <label for="payment_method" class="block text-md font-semibold text-[#263238] mb-2">Payment Method * 💳</label>
+                    <select id="payment_method" name="payment_method" required class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5] bg-white text-gray-700">
+                        <option value="Cash on Collection">Cash on Collection 💵</option>
+                        <option value="Cash on Delivery">Cash on Delivery 🚚</option>
+                        <option value="EFT">EFT 🏦</option>
+                        <option value="Instant Cash">Instant Cash ⚡</option>
+                        <option value="In-App (coming soon)" disabled>In-App (coming soon) 📱</option>
+                    </select>
+                </div>
+                <div class="mb-6 flex items-center">
+                    <input type="checkbox" id="remember" name="remember" {% if remembered_customer %}checked{% endif %} class="mr-2 h-4 w-4 text-[#00BFA5] border-gray-300 rounded focus:ring-[#00BFA5]">
+                    <label for="remember" class="text-md font-semibold text-[#263238]">Remember my details for next time ✅</label>
+                </div>
+                <button type="submit" class="btn bg-[#00BFA5] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-[#00897B] transition-colors duration-300 w-full">Place Order 🚀🎉</button>
             </form>
         </div>
-        <p><a href="{{ url_for('menus') }}" class="btn-back">Back to Products ⬅️🛍️</a></p>
+        <p class="mt-8 text-center">
+            <a href="{{ url_for('menus') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back to Products ⬅️🛍️</a>
+        </p>
     </section>
 {% endblock %}

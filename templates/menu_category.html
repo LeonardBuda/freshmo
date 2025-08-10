@@ -1,26 +1,51 @@
 {% extends "base.html" %}
 {% block title %}{{ category_name }} - Freshmo Brands 🛍️{% endblock %}
 {% block content %}
-    <section class="products-section">
-        <p><a href="{{ url_for('menus') }}" class="btn-back">Back to All Products ⬅️🏠</a></p>
-        <h1>{{ category_name }} 💧🌟</h1>
-        <p>Explore our {{ category_name }} products designed for ultimate freshness! 😊🚀</p>
-        <div class="product-list">
+    <section class="products-section p-6 bg-white rounded-lg shadow-lg border border-[#00BFA5] my-8">
+        <p class="mb-4"><a href="{{ url_for('menus') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back to All Products ⬅️🏠</a></p>
+        <h1 class="text-4xl font-extrabold text-[#263238] mb-4 text-center">{{ category_name }} 💧🌟</h1>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-8 text-center">Explore our {{ category_name }} products designed for ultimate freshness! 😊🚀</p>
+        
+        <div class="product-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for item in items %}
-                <div class="product-item">
-                    <h2>{{ item.name }} 🌈</h2>
-                    <p>R{{ item.price_zar|floatformat(2) }} 💸</p>
-                    <form method="POST" action="{{ url_for('add_to_cart') }}">
+                <div class="product-item bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5] flex flex-col items-center text-center transition-transform transform hover:scale-105 duration-300">
+                    <h2 class="text-2xl font-bold text-[#00897B] mb-2">{{ item.name }} 🌈</h2>
+                    {# Display price excluding VAT, VAT amount, and price including VAT #}
+                    <p class="text-md text-[#455A64] mb-1">Price (Excl. VAT): R{{ item.price_excl_vat|floatformat(2) }}</p>
+                    <p class="text-md text-[#455A64] mb-1">VAT (15%): R{{ item.vat_amount|floatformat(2) }}</p>
+                    <p class="text-xl text-[#455A64] mb-4">Total (Incl. VAT): R{{ item.price_incl_vat|floatformat(2) }} 💸</p>
+                    
+                    <form method="POST" action="{{ url_for('add_to_cart') }}" class="w-full">
                         <input type="hidden" name="item_id" value="{{ item.id }}">
                         <input type="hidden" name="item_name" value="{{ item.name }}">
-                        <input type="hidden" name="item_amount" value="{{ item.price_zar }}">
-                        <label for="quantity-{{ item.id }}">Quantity 📏</label>
-                        <input type="number" id="quantity-{{ item.id }}" name="quantity" value="1" min="1">
-                        <button type="submit" class="btn">Add to Cart 🛒🎉</button>
+                        {# Pass the price EXCLUDING VAT to the add_to_cart route #}
+                        <input type="hidden" name="item_amount" value="{{ item.price_excl_vat }}">
+                        
+                        {# Display color filter if item has colors #}
+                        {% if item.colors or item.toothbrush_colors %}
+                            <div class="mb-4">
+                                <label for="color-{{ item.id }}" class="block text-md font-semibold text-[#263238] mb-2">Choose Color 🎨</label>
+                                <select id="color-{{ item.id }}" name="color" class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5] bg-white text-gray-700">
+                                    {% set available_colors = item.colors if item.colors else item.toothbrush_colors %}
+                                    {% for color in available_colors %}
+                                        <option value="{{ color }}">{{ color.capitalize() }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-4">
+                            <label for="quantity-{{ item.id }}" class="block text-md font-semibold text-[#263238] mb-2">Quantity 📏</label>
+                            <input type="number" id="quantity-{{ item.id }}" name="quantity" value="1" min="1" class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5] text-center">
+                        </div>
+                        
+                        <button type="submit" class="btn bg-[#00BFA5] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-[#00897B] transition-colors duration-300 w-full">Add to Cart 🛒🎉</button>
                     </form>
                 </div>
             {% endfor %}
         </div>
-        <p><a href="{{ url_for('view_cart') }}" class="btn">View Your Cart 🛒🎉</a></p>
+        <p class="mt-8 text-center">
+            <a href="{{ url_for('view_cart') }}" class="btn inline-block bg-[#00BFA5] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-[#00897B] transition-colors duration-300">View Your Cart 🛒🎉</a>
+        </p>
     </section>
 {% endblock %}
