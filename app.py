@@ -76,25 +76,32 @@ def create_app():
         """Inject the current year into all templates for the footer."""
         return {'current_year': datetime.now().year}
 
-    # --- Firebase Initialization (Improved) ---
+    # --- Firebase Initialization (Fixed Indentation) ---
     firebase_credentials = app.config.get('FIREBASE_CONFIG')
     if firebase_credentials:
         try:
-            # Check if a Firebase app has already been initialized
-            if not get_app(name=app.name):
-                # Use app.name to create a unique Firebase app instance
-                initialize_app(credentials.Certificate(firebase_credentials), name=app.name)
-            
-            # Obtain the Firestore client and attach it to the Flask app object
-            app.db = firestore.client(app=get_app(name=app.name))
+            # Try to get the app; if it exists, use it
+            # The 'app.name' argument creates a unique Firebase app instance tied to this Flask app instance.
+            # This is crucial for Flask's reloader in development mode.
+            firebase_app = get_app(name=app.name)
+        except ValueError:
+            # If it doesn't exist, initialize it
+            firebase_app = initialize_app(credentials.Certificate(firebase_credentials), name=app.name)
             print("Firebase Admin SDK initialized successfully.")
-            print("Firestore client obtained and attached to app.")
         except Exception as e:
-            print(f"ERROR: Failed to initialize Firebase Admin SDK. Details: {e}")
-            app.db = None
+            print(f"Unexpected error during Firebase initialization: {str(e)}")
+            firebase_app = None  # Handle failure gracefully
+        if firebase_app:
+            # Obtain the Firestore client and attach it to the Flask app object
+            app.db = firestore.client(app=firebase_app)
+            print("Firestore client obtained successfully.")
+        else:
+            print("Failed to initialize Firebase. Firestore client not available.")
     else:
-        print("WARNING: Firebase credentials not found. Firestore will not be available.")
-        app.db = None
+        print("No Firebase credentials provided. Skipping Firebase initialization.")
+        # Ensure app.db is explicitly set to None if Firebase is not initialized
+        app.db = None 
+
 
     # --- Telegram Notification Setup ---
     TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
