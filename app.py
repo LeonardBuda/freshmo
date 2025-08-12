@@ -17,33 +17,34 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'super-secret-key-for-dev'
     SESSION_COOKIE_NAME = 'freshmo_session'
     PERMANENT_SESSION_LIFETIME = 3600  # 1 hour
-    FIREBASE_CONFIG = os.environ.get('FIREBASE_CONFIG')
-    GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY') # Added Google API Key to config
+    # This will hold the raw JSON string from the environment variable (Vercel)
+    # or a JSON string loaded from the local file (Development)
+    FIREBASE_SERVICE_ACCOUNT_JSON = os.environ.get('FIREBASE_SERVICE_ACCOUNT_JSON')
+    GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
     VAT_RATE = 0.15 # 15% VAT rate
 
 class DevelopmentConfig(Config):
     """Development configuration."""
     DEBUG = True
     FLASK_ENV = 'development'
-    # Fallback to local Firebase key for development
-    try:
-        # Check if FIREBASE_CONFIG is already set by environment variable
-        if not os.environ.get('FIREBASE_CONFIG'):
-            firebase_admin_sdk_path = os.path.join(os.path.dirname(__file__), 'freshmo-14493-firebase-adminsdk-fbsvc-cd258e541d.json')
-            if os.path.exists(firebase_admin_sdk_path):
-                with open(firebase_admin_sdk_path, 'r') as f:
-                    Config.FIREBASE_CONFIG = json.load(f)
-            else:
-                print("WARNING: 'freshmo-14493-firebase-adminsdk-fbsvc-cd258e541d.json' not found. Firebase will be initialized via environment variable (if available).")
-    except Exception as e:
-        print(f"Error loading local Firebase config: {e}")
+    # Fallback for local development: if env var isn't set, try to load from local file
+    if not os.environ.get('FIREBASE_SERVICE_ACCOUNT_JSON'):
+        firebase_admin_sdk_path = os.path.join(os.path.dirname(__file__), 'freshmo-14493-firebase-adminsdk-fbsvc-cd258e541d.json')
+        if os.path.exists(firebase_admin_sdk_path):
+            with open(firebase_admin_sdk_path, 'r') as f:
+                # For local development, load the JSON file and then dump it to a string.
+                # This ensures FIREBASE_SERVICE_ACCOUNT_JSON is always a string,
+                # consistent with how Vercel environment variables are handled.
+                Config.FIREBASE_SERVICE_ACCOUNT_JSON = json.dumps(json.load(f))
+        else:
+            print("WARNING: 'freshmo-14493-firebase-adminsdk-fbsvc-cd258e541d.json' not found. Firebase will only be initialized if FIREBASE_SERVICE_ACCOUNT_JSON env var is set.")
 
 
 class ProductionConfig(Config):
     """Production configuration."""
     DEBUG = False
     FLASK_ENV = 'production'
-    # Ensure SECRET_KEY and FIREBASE_CREDENTIALS are set in production environment variables
+    # Ensure SECRET_KEY and FIREBASE_SERVICE_ACCOUNT_JSON are set in production environment variables
 
 # --- Application Factory Function ---
 def create_app():
@@ -76,31 +77,38 @@ def create_app():
         """Inject the current year into all templates for the footer."""
         return {'current_year': datetime.now().year}
 
-    # --- Firebase Initialization (Fixed Indentation) ---
-    firebase_credentials = app.config.get('FIREBASE_CONFIG')
-    if firebase_credentials:
+    # --- Firebase Initialization (Corrected for Vercel Environment Variables) ---
+    firebase_config_json_string = app.config.get('FIREBASE_SERVICE_ACCOUNT_JSON') # Get the raw JSON string
+    app.db = None # Initialize app.db to None by default
+
+    if firebase_config_json_string:
         try:
-            # Try to get the app; if it exists, use it
-            # The 'app.name' argument creates a unique Firebase app instance tied to this Flask app instance.
-            # This is crucial for Flask's reloader in development mode.
-            firebase_app = get_app(name=app.name)
-        except ValueError:
-            # If it doesn't exist, initialize it
-            firebase_app = initialize_app(credentials.Certificate(firebase_credentials), name=app.name)
-            print("Firebase Admin SDK initialized successfully.")
-        except Exception as e:
-            print(f"Unexpected error during Firebase initialization: {str(e)}")
-            firebase_app = None  # Handle failure gracefully
-        if firebase_app:
-            # Obtain the Firestore client and attach it to the Flask app object
+            # Parse the JSON string into a Python dictionary
+            firebase_credentials_dict = json.loads(firebase_config_json_string)
+
+            # Check if a Firebase app with this name already exists
+            try:
+                # Use a specific name for your Firebase app to avoid conflicts, e.g., 'freshmo_app'
+                # Pass the Flask app's name, which is 'app' by default, as the name argument
+                firebase_app = get_app(name=app.name)
+            except ValueError:
+                # If not, initialize it using the dictionary credentials
+                firebase_app = initialize_app(credentials.Certificate(firebase_credentials_dict), name=app.name)
+                print("Firebase Admin SDK initialized successfully for Flask app instance.")
+            
+            # Obtain the Firestore client using the app instance
             app.db = firestore.client(app=firebase_app)
             print("Firestore client obtained successfully.")
-        else:
-            print("Failed to initialize Firebase. Firestore client not available.")
+
+        except json.JSONDecodeError as e:
+            print(f"ERROR: FIREBASE_SERVICE_ACCOUNT_JSON environment variable is not valid JSON. Details: {e}")
+            # Firebase will not be initialized, app.db remains None
+        except Exception as e:
+            print(f"Unexpected error during Firebase initialization. Details: {str(e)}")
+            # Firebase will not be initialized, app.db remains None
     else:
-        print("No Firebase credentials provided. Skipping Firebase initialization.")
-        # Ensure app.db is explicitly set to None if Firebase is not initialized
-        app.db = None 
+        print("WARNING: No FIREBASE_SERVICE_ACCOUNT_JSON environment variable found. Firebase will not be available.")
+        # app.db is already None
 
 
     # --- Telegram Notification Setup ---
