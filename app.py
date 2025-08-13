@@ -174,6 +174,32 @@ def create_app():
 
     app.send_telegram_notification = send_telegram_notification # Make available to app instance
 
+    # --- Google Maps API Setup ---
+    GOOGLE_API_KEY = app.config.get('GOOGLE_API_KEY')
+    GOOGLE_DISTANCE_MATRIX_URL = "https://maps.googleapis.com/maps/api/distancematrix/json"
+
+    # --- VAT Rate ---
+    VAT_RATE = app.config.get('VAT_RATE', 0.15) # Default to 15% if not in config
+
+    # --- Products and Colors (Moved inside create_app) ---
+    PRODUCTS = [
+        # Mouthwash Sachets
+        {'id': 'sm-single', 'name': 'Strawberry Mint Single Sachet', 'category': 'Mouthwash Sachets', 'price_excl_vat': 9.00, 'type': 'single'},
+        {'id': 'sm-box', 'name': 'Strawberry Mint Box (30 Sachets)', 'category': 'Mouthwash Sachets', 'price_excl_vat': 210.00, 'type': 'box'},
+        {'id': 'sm-bulk', 'name': 'Strawberry Mint Bulk Box (10 Boxes)', 'category': 'Mouthwash Sachets', 'price_excl_vat': 1800.00, 'type': 'bulk_box'},
+
+        # Oral Care Accessories
+        {'id': 'bamboo-toothbrush', 'name': 'Biodegradable Bamboo Toothbrush', 'category': 'Oral Care Accessories', 'price_excl_vat': 45.00, 'colors': ['green', 'orange', 'purple', 'grey', 'blue']},
+        {'id': 'bamboo-toothbrush-box', 'name': 'Biodegradable Bamboo Toothbrush Box (10 Pcs)', 'category': 'Oral Care Accessories', 'price_excl_vat': 350.00, 'colors': ['green', 'orange', 'purple', 'grey', 'blue']},
+
+        # Combos
+        {'id': 'freshness-combo', 'name': 'Freshness Combo (Box + Toothbrush)', 'category': 'Combos', 'price_excl_vat': 225.00, 'toothbrush_colors': ['green', 'orange', 'purple', 'grey', 'blue']}
+    ]
+
+    # List of available toothbrush colors for dropdowns
+    TOOTHBRUSH_COLORS = ['green', 'orange', 'purple', 'grey', 'blue']
+
+
     def calculate_delivery_charge(origin, destination):
         if not GOOGLE_API_KEY:
             print("Google API key not configured. Please set GOOGLE_API_KEY in .env. 😞")
