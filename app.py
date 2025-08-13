@@ -116,38 +116,28 @@ def create_app():
     TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
     TELEGRAM_API_URL = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage" if TELEGRAM_BOT_TOKEN else None
 
-    # --- Google Maps API Setup ---
-    GOOGLE_API_KEY = app.config.get('GOOGLE_API_KEY')
-    GOOGLE_DISTANCE_MATRIX_URL = "https://maps.googleapis.com/maps/api/distancematrix/json"
-
-    # --- VAT Rate ---
-    VAT_RATE = app.config.get('VAT_RATE', 0.15) # Default to 15% if not in config
-
-    # --- Updated Static Product List ---
-    # Prices are now EXCLUDING VAT (price_excl_vat)
-    PRODUCTS = [
-        # Mouthwash Sachets
-        {'id': 'sm-single', 'name': 'Strawberry Mint Single Sachet', 'category': 'Mouthwash Sachets', 'price_excl_vat': 9.00, 'type': 'single'},
-        {'id': 'sm-box', 'name': 'Strawberry Mint Box (30 Sachets)', 'category': 'Mouthwash Sachets', 'price_excl_vat': 210.00, 'type': 'box'},
-        {'id': 'sm-bulk', 'name': 'Strawberry Mint Bulk Box (10 Boxes)', 'category': 'Mouthwash Sachets', 'price_excl_vat': 1800.00, 'type': 'bulk_box'},
-
-        # Oral Care Accessories
-        {'id': 'bamboo-toothbrush', 'name': 'Biodegradable Bamboo Toothbrush', 'category': 'Oral Care Accessories', 'price_excl_vat': 45.00, 'colors': ['green', 'orange', 'purple', 'grey', 'blue']},
-        {'id': 'bamboo-toothbrush-box', 'name': 'Biodegradable Bamboo Toothbrush Box (10 Pcs)', 'category': 'Oral Care Accessories', 'price_excl_vat': 350.00, 'colors': ['green', 'orange', 'purple', 'grey', 'blue']},
-
-        # Combos
-        {'id': 'freshness-combo', 'name': 'Freshness Combo (Box + Toothbrush)', 'category': 'Combos', 'price_excl_vat': 225.00, 'toothbrush_colors': ['green', 'orange', 'purple', 'grey', 'blue']}
-    ]
-
-    # List of available toothbrush colors for dropdowns
-    TOOTHBRUSH_COLORS = ['green', 'orange', 'purple', 'grey', 'blue']
-
-
-    def send_telegram_notification(order_number, cart_items, customer_details, final_total, delivery_charge, payment_method, special_note, total_excl_vat, total_vat_amount):
+    # New: Generic Telegram message sender
+    def send_general_telegram_message(message_text, parse_mode='Markdown'):
         if not all([TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, TELEGRAM_API_URL]):
             print("Telegram bot not configured. Skipping notification. 😞")
             return
 
+        payload = {
+            'chat_id': TELEGRAM_CHAT_ID,
+            'text': message_text,
+            'parse_mode': parse_mode
+        }
+        try:
+            response = requests.post(TELEGRAM_API_URL, json=payload, timeout=5)
+            response.raise_for_status()
+            print("Telegram notification sent successfully! 🎉")
+        except requests.exceptions.RequestException as e:
+            print(f"Failed to send Telegram notification: {e} 😢")
+
+    # The next two functions will use this general sender
+    
+    def send_telegram_notification(order_number, cart_items, customer_details, final_total, delivery_charge, payment_method, special_note, total_excl_vat, total_vat_amount):
+        """Sends a detailed Telegram notification for a new order."""
         order_details = ""
         for item in cart_items:
             item_display_name = item['name']
@@ -180,19 +170,9 @@ def create_app():
             f"✨ *Special Note:* {special_note if special_note else 'None'} 📝\n"
             f"⏰ *Time:* {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ⏰"
         )
-        payload = {
-            'chat_id': TELEGRAM_CHAT_ID,
-            'text': message,
-            'parse_mode': 'Markdown'
-        }
-        try:
-            response = requests.post(TELEGRAM_API_URL, json=payload, timeout=5)
-            response.raise_for_status()
-            print("Telegram notification sent successfully! 🎉")
-        except requests.exceptions.RequestException as e:
-            print(f"Failed to send Telegram notification: {e} 😢")
+        send_general_telegram_message(message, parse_mode='Markdown')
 
-    app.send_telegram_notification = send_telegram_notification
+    app.send_telegram_notification = send_telegram_notification # Make available to app instance
 
     def calculate_delivery_charge(origin, destination):
         if not GOOGLE_API_KEY:
@@ -297,6 +277,19 @@ def create_app():
             try:
                 app.db.collection('reviews').add(review_data)
                 flash('Thank you for your review! Your feedback means the world to us! 🌟', 'success')
+
+                # Send Telegram notification for review
+                review_message = (
+                    f"⭐ *New Review Received!* ⭐\n"
+                    f"----------------------------------------\n"
+                    f"📝 *Product:* {product if product else 'N/A'}\n"
+                    f"🌟 *Rating:* {rating} stars\n"
+                    f"💬 *Review:* {review}\n"
+                    f"👤 *Reviewer:* {name if name else 'Anonymous'}\n"
+                    f"⏰ *Time:* {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+                )
+                send_general_telegram_message(review_message, parse_mode='Markdown')
+
             except Exception as e:
                 flash(f'Failed to submit review: {str(e)} 😢', 'error')
 
@@ -313,16 +306,31 @@ def create_app():
             name = request.form.get('name')
             email = request.form.get('email')
             message = request.form.get('message')
+            subject = request.form.get('subject') # Assuming you have a subject field
 
             contact_request = {
                 'name': name,
                 'email': email,
                 'message': message,
+                'subject': subject, # Add subject to Firestore
                 'timestamp': firestore.SERVER_TIMESTAMP
             }
             try:
                 app.db.collection('contact_requests').add(contact_request)
                 flash('Your message has been sent successfully! 🚀', 'success')
+
+                # Send Telegram notification for contact form
+                contact_message = (
+                    f"📞 *New Contact Request!* 📧\n"
+                    f"----------------------------------------\n"
+                    f"👤 *Name:* {name}\n"
+                    f"📧 *Email:* {email}\n"
+                    f"📝 *Subject:* {subject if subject else 'N/A'}\n"
+                    f"💬 *Message:*\n{message}\n"
+                    f"⏰ *Time:* {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+                )
+                send_general_telegram_message(contact_message, parse_mode='Markdown')
+
             except Exception as e:
                 flash(f'Failed to send message: {str(e)} 😢', 'error')
 
@@ -530,7 +538,7 @@ def create_app():
             try:
                 if app.db:
                     app.db.collection('orders').add(order_data)
-                app.send_telegram_notification(order_number, cart_items, customer_details, grand_total_incl_vat, delivery_charge, payment_method, special_note, subtotal_excl_vat, total_vat_amount)
+                send_telegram_notification(order_number, cart_items, customer_details, grand_total_incl_vat, delivery_charge, payment_method, special_note, subtotal_excl_vat, total_vat_amount)
                 session.pop('cart', None)
                 session.modified = True
 
