@@ -141,14 +141,15 @@
 
         // JavaScript to toggle the address field based on delivery option
         document.addEventListener('DOMContentLoaded', function() {
-            const deliveryRadio = document.getElementById('delivery');
-            const collectionRadio = document.getElementById('collection');
+            // Correctly target the <select> element by its ID
+            const deliveryTypeSelect = document.getElementById('delivery_type');
             const addressInput = document.getElementById('address');
             const addressFieldContainer = document.getElementById('address_field_container');
 
-            if (deliveryRadio && collectionRadio && addressInput && addressFieldContainer) {
+            if (deliveryTypeSelect && addressInput && addressFieldContainer) {
                 function toggleAddressField() {
-                    if (deliveryRadio.checked) {
+                    // Check if the selected value is 'Delivery'
+                    if (deliveryTypeSelect.value === 'Delivery') {
                         addressFieldContainer.style.display = 'block';
                         addressInput.setAttribute('required', 'required');
                     } else {
@@ -157,8 +158,11 @@
                     }
                 }
 
-                deliveryRadio.addEventListener('change', toggleAddressField);
-                collectionRadio.addEventListener('change', toggleAddressField);
+                // Add event listener to the delivery type dropdown
+                deliveryTypeSelect.addEventListener('change', toggleAddressField);
+
+                // Call the function once on page load to set the initial state
+                // (useful if 'remembered_customer' has 'Delivery' pre-selected from session)
                 toggleAddressField();
             }
         });
