@@ -1,26 +1,26 @@
 {% extends "base.html" %}
-{% block title %}Your Cart - Freshmo Brands 🛒🛍️{% endblock %}
+{% block title %}Your Cart - Freshmo Brands 🛒🛍️✨{% endblock %}
 {% block content %}
     <section class="products-section p-6 bg-white rounded-lg shadow-lg border border-[#00BFA5] my-8">
         <p class="mb-4"><a href="{{ url_for('menus') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back to Products ⬅️</a></p>
-        <h1 class="text-4xl font-extrabold text-[#263238] mb-4 text-center">Your Shopping Cart 🎉🛒</h1>
+        <h1 class="text-4xl font-extrabold text-[#263238] mb-4 text-center">Your Shopping Cart 🎉🛒🛍️</h1>
         {% if cart_items %}
             <div class="cart-items grid grid-cols-1 gap-4 mb-6">
                 {% for item in cart_items %}
                     <div class="cart-item bg-[#E0F2F7] p-4 rounded-lg shadow-sm border border-[#00BFA5] flex flex-col md:flex-row justify-between items-center text-center md:text-left">
                         <div class="flex-grow mb-2 md:mb-0">
                             <p class="text-lg font-semibold text-[#263238]">{{ item.name }}</p>
-                            <p class="text-md text-[#455A64]">Quantity: {{ item.quantity }}</p>
-                            <p class="text-md text-[#455A64]">Price (Excl. VAT): R{{ item.price_excl_vat_per_unit|floatformat(2) }}</p>
-                            <p class="text-md text-[#455A64]">VAT (15%): R{{ item.vat_amount_per_unit|floatformat(2) }}</p>
-                            <p class="text-md text-[#455A64]">Price (Incl. VAT): R{{ item.price_incl_vat_per_unit|floatformat(2) }}</p>
+                            <p class="text-md text-[#455A64]">Quantity: {{ item.quantity }} 🔢</p>
+                            <p class="text-md text-[#455A64]">Price (Excl. VAT): R{{ item.price_excl_vat_per_unit|floatformat(2) }} 💰</p>
+                            <p class="text-md text-[#455A64]">VAT (15%): R{{ item.vat_amount_per_unit|floatformat(2) }} 🧾</p>
+                            <p class="text-md text-[#455A64]">Price (Incl. VAT): R{{ item.price_incl_vat_per_unit|floatformat(2) }} ✨</p>
                             <p class="text-lg font-bold text-[#00897B] mt-2">Total (Incl. VAT): R{{ item.total_incl_vat|floatformat(2) }} 💸</p>
                         </div>
                         <div class="flex space-x-2 mt-2 md:mt-0">
                             <form method="POST" action="{{ url_for('update_cart') }}" class="update-form flex items-center">
                                 <input type="hidden" name="item_id" value="{{ item.id }}">
                                 <input type="number" name="quantity" value="{{ item.quantity }}" min="0" class="quantity-input w-20 p-2 border border-gray-300 rounded-md text-center">
-                                <button type="submit" class="btn bg-[#00BFA5] text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#00897B] transition-colors duration-300 ml-2">Update</button>
+                                <button type="submit" class="btn bg-[#00BFA5] text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#00897B] transition-colors duration-300 ml-2">Update 👍</button>
                             </form>
                             <form method="POST" action="{{ url_for('remove_from_cart') }}" class="remove-form">
                                 <input type="hidden" name="item_id" value="{{ item.id }}">
@@ -43,7 +43,7 @@
         {% else %}
             <p class="text-center text-xl text-[#455A64] mb-8">Your cart is empty! Time to fill it up with some Freshmo goodness! 😞</p>
             <p class="text-center">
-                <a href="{{ url_for('menus') }}" class="btn inline-block bg-[#00BFA5] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#00897B] transition-all duration-300 ease-in-out transform hover:scale-105">Start Shopping Now! 🚀</a>
+                <a href="{{ url_for('menus') }}" class="btn inline-block bg-[#00BFA5] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#00897B] transition-all duration-300 ease-in-out transform hover:scale-105">Start Shopping Now! 🚀🛍️</a>
             </p>
         {% endif %}
     </section>

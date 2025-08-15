@@ -1,19 +1,22 @@
 {% extends "base.html" %}
-{% block title %}Our Products - Freshmo Brands 🛍️{% endblock %}
+{% block title %}Our Products - Freshmo Brands 🛍️💧✨{% endblock %}
 {% block content %}
-    <section class="products-section">
-        <p><a href="{{ url_for('home') }}" class="btn-back">Back ⬅️🏠</a></p>
-        <h1>Our Freshmo Products! ✨🛍️</h1>
-        <p>Explore our innovative oral care solutions designed for "Freshness on the Go"! 💧🚀</p>
-        <div class="category-list">
+    <section class="products-section p-6 bg-white rounded-lg shadow-lg border border-[#00BFA5] my-8">
+        <p class="mb-4"><a href="{{ url_for('home') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back ⬅️🏠</a></p>
+        <h1 class="text-4xl font-extrabold text-[#263238] mb-4 text-center">Our Freshmo Products! ✨🛍️🛒</h1>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-8 text-center">Explore our innovative oral care solutions designed for "Freshness on the Go"! 💧🚀😊</p>
+        
+        <div class="category-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for category_name, category_data in categories.items() %}
-                <div class="category-item">
-                    <h2>{{ category_name }} 🌟</h2>
-                    <p>{{ category_data.description }} 😊</p>
-                    <p><a href="{{ url_for('show_menu_category', category_name=category_name|replace(' ', '_')) }}" class="btn">View {{ category_name }} ➡️</a></p>
+                <div class="category-item bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5] flex flex-col items-center text-center transition-transform transform hover:scale-105 duration-300">
+                    <h2 class="text-2xl font-bold text-[#00897B] mb-2">{{ category_name }} 🌟</h2>
+                    <p class="text-md text-[#455A64] mb-4">{{ category_data.description }} 😊</p>
+                    <a href="{{ url_for('show_menu_category', category_name=category_name|replace(' ', '_')) }}" class="btn bg-[#00BFA5] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-[#00897B] transition-colors duration-300">View {{ category_name }} ➡️</a>
                 </div>
             {% endfor %}
         </div>
-        <p><a href="{{ url_for('view_cart') }}" class="btn">View Your Cart 🛒🎉</a></p>
+        <p class="mt-8 text-center">
+            <a href="{{ url_for('view_cart') }}" class="btn inline-block bg-[#00BFA5] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-[#00897B] transition-colors duration-300">View Your Cart 🛒🎉</a>
+        </p>
     </section>
 {% endblock %}

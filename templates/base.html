@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Freshmo Brands{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <!-- Tailwind CSS CDN for modern styling - Kept for potential future use or specific components -->
+    <title>{% block title %}Freshmo Brands - Freshness On The Go! 💧✨🚀{% endblock %}</title>
+    <!-- Favicon for Freshmo (Mouthwash Sachet Icon) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>">
+    <!-- Tailwind CSS CDN for modern styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome for social media icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Custom styles to override or extend Tailwind, if necessary */
         body {
-            font-family: 'Inter', sans-serif; /* Ensure Inter font is applied */
-            /* Background color and text color will be handled by style.css or Tailwind */
+            font-family: 'Inter', sans-serif;
+            background-color: #E0F2F7; /* Light blue-green background, fresh feel */
+            color: #263238; /* Darker text for readability */
         }
         /* Styles for Flash Messages */
         .flash-messages {
@@ -59,26 +61,179 @@
             100% { opacity: 0; transform: translateY(-20px) translateX(-50%); }
         }
 
-        /* Mobile Navbar specific styles */
+        /* General button styles for consistency and visual appeal */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Fully rounded */
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .btn-back {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            color: #00897B; /* Darker teal */
+        }
+        .btn-back:hover {
+            text-decoration: underline;
+            color: #00BFA5; /* Lighter teal on hover */
+        }
+
+        /* Header specific styles */
+        .header {
+            background-color: #00BFA5; /* Freshmo Green */
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Allow wrapping for mobile */
+            position: sticky;
+            top: 0;
+            z-index: 50; /* Ensure header stays on top */
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo-link {
+            color: white; /* White for better contrast */
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem; /* Larger font for logo */
+        }
+        .logo img {
+            height: 50px; /* Slightly smaller logo */
+            margin-right: 10px;
+            border-radius: 50%; /* Make logo round */
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.5rem 0.25rem; /* Add some padding for touch targets */
+            transition: color 0.3s ease-in-out;
+        }
+        .nav-links li a:hover {
+            color: #E0F2F7; /* Lighter shade on hover */
+        }
+        .menu-toggle {
+            display: none; /* Hidden on desktop */
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        /* Main content padding */
+        main {
+            padding: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #263238; /* Dark, professional color */
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .social-media {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+        }
+        .social-icon {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s ease-in-out;
+            display: flex; /* For aligning text and icon */
+            align-items: center;
+            gap: 0.5rem; /* Space between icon and text */
+        }
+        .social-icon:hover {
+            color: #00BFA5; /* Freshmo Green on hover */
+        }
+        .zar-bots {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #B0BEC5; /* Lighter grey for subtle credit */
+        }
+
+        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .nav-links.active {
-                display: flex;
-                flex-direction: column; /* Stack links vertically on mobile */
+            .menu-toggle {
+                display: block; /* Show menu toggle on mobile */
+            }
+            .nav-links {
+                display: none; /* Hide nav links by default on mobile */
+                flex-direction: column;
                 width: 100%;
-                text-align: center;
+                background-color: #00BFA5; /* Same as header */
+                position: absolute;
+                top: 70px; /* Below header */
+                left: 0;
+                padding: 1rem 0;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            .nav-links.active {
+                display: flex; /* Show when active */
             }
             .nav-links li {
                 width: 100%;
+                text-align: center;
             }
             .nav-links li a {
-                padding: 0.75rem 0; /* Add padding for touch targets */
-                border-bottom: 1px solid rgba(255,255,255,0.1); /* Subtle separator */
+                padding: 0.75rem 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
             }
             .nav-links li:last-child a {
-                border-bottom: none; /* No border on the last item */
+                border-bottom: none;
             }
-            .header .logo-link span { /* Ensure logo text is white on mobile too */
-                color: white !important;
+            .header .logo-link span {
+                color: white !important; /* Ensure white text for logo on mobile */
+            }
+            .header {
+                padding: 0.8rem 1rem;
+            }
+            .logo img {
+                height: 40px;
+            }
+            main {
+                padding: 1rem;
+            }
+            .footer {
+                padding: 1rem;
+            }
+            .social-icon {
+                font-size: 1rem;
+            }
+            .social-media {
+                gap: 1rem;
             }
         }
     </style>
@@ -87,8 +242,8 @@
     <header class="header">
         <div class="logo">
             <a href="{{ url_for('home') }}" class="logo-link">
-                <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Freshmo Brands">
-                <span style="color: white;">Freshmo Brands</span> <!-- Changed to white -->
+                <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Freshmo Brands Logo 💧">
+                <span>Freshmo Brands</span>
             </a>
         </div>
         <nav>
@@ -97,12 +252,12 @@
             </button>
             <ul class="nav-links">
                 <li><a href="{{ url_for('home') }}">Home 🏠</a></li>
-                <li><a href="{{ url_for('menus') }}">Products 🛍️</a></li>
-                <li><a href="{{ url_for('gallery') }}">Gallery 📸</a></li>
-                <li><a href="{{ url_for('about') }}">About 📖</a></li>
-                <li><a href="{{ url_for('faqs') }}">FAQs ❓</a></li>
-                <li><a href="{{ url_for('contact') }}">Contact 📞</a></li>
-                <li><a href="{{ url_for('rate_us') }}">Rate Us ⭐</a></li>
+                <li><a href="{{ url_for('menus') }}">Products 🛍️✨</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery 📸🎨</a></li>
+                <li><a href="{{ url_for('about') }}">About Us 📖🇿🇦</a></li>
+                <li><a href="{{ url_for('faqs') }}">FAQs ❓💡</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact Us 📞📧</a></li>
+                <li><a href="{{ url_for('rate_us') }}">Rate Us ⭐✍️</a></li>
                 <li><a href="{{ url_for('view_cart') }}">Cart 🛒</a></li>
             </ul>
         </nav>
@@ -125,11 +280,11 @@
     <footer class="footer">
         <div class="social-media">
             <a href="https://facebook.com/freshmobrands" class="social-icon facebook" target="_blank">Facebook 📘</a>
-            <a href="https://www.instagram.com/_freshmo/" class="social-icon instagram" target="_blank">Instagram 📷</a> <!-- Updated Instagram Link -->
-            <a href="https://www.tiktok.com/@paulmasilo243" class="social-icon tiktok" target="_blank">TikTok 🎵</a> <!-- Updated TikTok Link -->
+            <a href="https://www.instagram.com/_freshmo/" class="social-icon instagram" target="_blank">Instagram 📷</a>
+            <a href="https://www.tiktok.com/@paulmasilo243" class="social-icon tiktok" target="_blank">TikTok 🎵</a>
         </div>
-        <div>© {{ current_year }} Freshmo Brands. All Rights Reserved. 🌟</div>
-        <div class="zar-bots">Online Store built by ZARBots 👉🏽 +27766440806</div>
+        <div>© {{ current_year }} Freshmo Brands. All Rights Reserved. 🌟🇿🇦</div>
+        <div class="zar-bots">Online Store built by ZARBots 👉🏽 +27766440806 🤖</div>
     </footer>
 
     <!-- JavaScript for mobile navbar toggle -->

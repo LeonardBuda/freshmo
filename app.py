@@ -65,7 +65,7 @@ def create_app():
         """
         try:
             return f"{float(value):.{decimal_places}f}"
-        except (ValueError, TypeError):
+        except (ValueError, TypeError):\
             return value
 
     app.jinja_env.filters['floatformat'] = floatformat
@@ -302,7 +302,7 @@ def create_app():
             }
             try:
                 app.db.collection('reviews').add(review_data)
-                flash('Thank you for your review! Your feedback means the world to us! 🌟', 'success')
+                flash('Thank you for your review! Your feedback means the world to us! 🌟😊', 'success') # Added emoji
 
                 # Send Telegram notification for review
                 review_message = (
@@ -312,12 +312,12 @@ def create_app():
                     f"🌟 *Rating:* {rating} stars\n"
                     f"💬 *Review:* {review}\n"
                     f"👤 *Reviewer:* {name if name else 'Anonymous'}\n"
-                    f"⏰ *Time:* {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+                    f"⏰ *Time:* {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ⏰"
                 )
                 send_general_telegram_message(review_message, parse_mode='Markdown')
 
             except Exception as e:
-                flash(f'Failed to submit review: {str(e)} 😢', 'error')
+                flash(f'Failed to submit review: {str(e)} 😢', 'error') # Added emoji
 
             return redirect(url_for('rate_us'))
         return render_template('rate_us.html')
@@ -343,7 +343,7 @@ def create_app():
             }
             try:
                 app.db.collection('contact_requests').add(contact_request)
-                flash('Your message has been sent successfully! 🚀', 'success')
+                flash('Your message has been sent successfully! 🚀✉️', 'success') # Added emoji
 
                 # Send Telegram notification for contact form
                 contact_message = (
@@ -353,12 +353,12 @@ def create_app():
                     f"📧 *Email:* {email}\n"
                     f"📝 *Subject:* {subject if subject else 'N/A'}\n"
                     f"💬 *Message:*\n{message}\n"
-                    f"⏰ *Time:* {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+                    f"⏰ *Time:* {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ⏰"
                 )
                 send_general_telegram_message(contact_message, parse_mode='Markdown')
 
             except Exception as e:
-                flash(f'Failed to send message: {str(e)} 😢', 'error')
+                flash(f'Failed to send message: {str(e)} 😢', 'error') # Added emoji
 
             return redirect(url_for('contact'))
         return render_template('contact.html')

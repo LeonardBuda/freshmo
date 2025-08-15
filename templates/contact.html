@@ -1,29 +1,42 @@
 {% extends "base.html" %}
-{% block title %}Contact Us - Freshmo Brands 📞📧{% endblock %}
+{% block title %}Contact Us - Freshmo Brands 📞📧💬{% endblock %}
 {% block content %}
-    <section class="products-section">
-        <p><a href="{{ url_for('menus') }}" class="btn-back">Back to Products ⬅️</a></p>
-        <h1>Get in Touch with Freshmo! 📞📧</h1>
-        <p>Have questions, feedback, or just want to say hello? We'd love to hear from you!</p>
-        <form method="POST" action="{{ url_for('contact') }}" class="checkout-form">
-            <label for="name">Your Name *</label>
-            <input type="text" id="name" name="name" required>
-            <label for="email">Your Email *</label>
-            <input type="email" id="email" name="email" required>
-            <label for="phone">Phone Number (Optional)</label>
-            <input type="tel" id="phone" name="phone">
-            <label for="subject">Subject *</label>
-            <input type="text" id="subject" name="subject" required>
-            <label for="message">Your Message *</label>
-            <textarea id="message" name="message">{{ message if message else '' }}</textarea>
-            <button type="submit" class="btn">Send Message 🚀</button>
+    <section class="products-section p-6 bg-white rounded-lg shadow-lg border border-[#00BFA5] my-8">
+        <p class="mb-4"><a href="{{ url_for('menus') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back to Products ⬅️🛍️</a></p>
+        <h1 class="text-4xl font-extrabold text-[#263238] mb-4 text-center">Get in Touch with Freshmo! 📞📧✨</h1>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-8 text-center">Have questions, feedback, or just want to say hello? We'd love to hear from you! 👋😊</p>
+        <form method="POST" action="{{ url_for('contact') }}" class="checkout-form bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5]">
+            <div class="mb-4">
+                <label for="name" class="block text-md font-semibold text-[#263238] mb-2">Your Name * 👤</label>
+                <input type="text" id="name" name="name" required class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]">
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-md font-semibold text-[#263238] mb-2">Your Email * 📧</label>
+                <input type="email" id="email" name="email" required class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]">
+            </div>
+            <div class="mb-4">
+                <label for="phone" class="block text-md font-semibold text-[#263238] mb-2">Phone Number (Optional) 📞</label>
+                <input type="tel" id="phone" name="phone" class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]">
+            </div>
+            <div class="mb-4">
+                <label for="subject" class="block text-md font-semibold text-[#263238] mb-2">Subject * 📝</label>
+                <input type="text" id="subject" name="subject" required class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]">
+            </div>
+            <div class="mb-6">
+                <label for="message" class="block text-md font-semibold text-[#263238] mb-2">Your Message * 💬</label>
+                <textarea id="message" name="message" rows="5" required class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]">{{ message if message else '' }}</textarea>
+            </div>
+            <button type="submit" class="btn bg-[#00BFA5] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-[#00897B] transition-colors duration-300 w-full">Send Message 🚀✉️</button>
         </form>
-        <h2>Other Ways to Connect:</h2>
-        <p>Email: <a href="mailto:freshmobrands@outlook.com">freshmobrands@outlook.com</a></p>
-        <p>Contact: Paul Masilo, <a href="tel:+27842737821">+27842737821</a></p>
-        <p>WhatsApp: <a href="https://wa.me/27842737821">Chat with us on WhatsApp</a></p>
-        <p>Website: <a href="https://freshmo.co.za">https://freshmo.co.za</a></p>
-        <p>Address: 27 Parakeet Street, Villa Lisa, Boksburg, 1459, South Africa 📍</p>
-        <p><a href="{{ url_for('menus') }}" class="btn-back">Back to Products ⬅️</a></p>
+        
+        <h2 class="text-3xl font-bold text-[#00897B] mb-4 mt-8 text-center">Other Ways to Connect: 🌐</h2>
+        <p class="text-lg text-[#455A64] mb-2 text-center">Email: <a href="mailto:freshmobrands@outlook.com" class="text-[#00897B] hover:underline">freshmobrands@outlook.com</a> 📧</p>
+        <p class="text-lg text-[#455A64] mb-2 text-center">Contact: Paul Masilo, <a href="tel:+27842737821" class="text-[#00897B] hover:underline">+27842737821</a> 📲</p>
+        <p class="text-lg text-[#455A64] mb-2 text-center">WhatsApp: <a href="https://wa.me/27842737821" class="text-[#00897B] hover:underline">Chat with us on WhatsApp</a> 💬</p>
+        <p class="text-lg text-[#455A64] mb-8 text-center">Address: 27 Parakeet Street, Villa Lisa, Boksburg, 1459, South Africa 📍🗺️</p>
+
+        <p class="text-center">
+            <a href="{{ url_for('menus') }}" class="btn-back inline-block bg-[#00BFA5] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#00897B] transition-all duration-300 ease-in-out transform hover:scale-105">Back to Products ⬅️🛍️</a>
+        </p>
     </section>
 {% endblock %}

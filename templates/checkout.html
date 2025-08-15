@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Checkout - Freshmo Brands 🛒💳{% endblock %}
+{% block title %}Checkout - Freshmo Brands 🛒💳✨{% endblock %}
 {% block content %}
     <section class="products-section p-6 bg-white rounded-lg shadow-lg border border-[#00BFA5] my-8">
         <p class="mb-4"><a href="{{ url_for('menus') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back to Products ⬅️🛍️</a></p>
@@ -12,11 +12,11 @@
                         <li>
                             {{ item.name }} (x{{ item.quantity }})
                             <br>
-                            <span class="ml-4">Price (Excl. VAT): R{{ item.price_excl_vat_per_unit|floatformat(2) }}</span>
+                            <span class="ml-4">Price (Excl. VAT): R{{ item.price_excl_vat_per_unit|floatformat(2) }} 💰</span>
                             <br>
-                            <span class="ml-4">VAT (15%): R{{ item.vat_amount_per_unit|floatformat(2) }}</span>
+                            <span class="ml-4">VAT (15%): R{{ item.vat_amount_per_unit|floatformat(2) }} 🧾</span>
                             <br>
-                            <span class="ml-4 font-semibold">Total (Incl. VAT): R{{ item.price_incl_vat_per_unit|floatformat(2) }}</span>
+                            <span class="ml-4 font-semibold">Total (Incl. VAT): R{{ item.price_incl_vat_per_unit|floatformat(2) }} ✨</span>
                             <br>
                             <span class="ml-4 font-bold">Line Total (Incl. VAT for quantity): R{{ item.total_incl_vat|floatformat(2) }} 💸</span>
                         </li>

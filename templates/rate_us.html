@@ -1,39 +1,41 @@
 {% extends "base.html" %}
-{% block title %}Rate Us - Freshmo Brands ⭐✍️{% endblock %}
+{% block title %}Rate Us - Freshmo Brands ⭐✍️😊{% endblock %}
 {% block content %}
-<section class="products-section">
-    <a href="{{ url_for('menus') }}" class="btn-back">Back to Products ⬅️🛍️</a>
-    <h1>Rate Your Freshmo Experience! ⭐✍️</h1>
-    <p>Your feedback helps us grow and serve you better. Please share your thoughts! 🌟😊</p>
+<section class="products-section p-6 bg-white rounded-lg shadow-lg border border-[#00BFA5] my-8">
+    <p class="mb-4"><a href="{{ url_for('menus') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back to Products ⬅️🛍️</a></p>
+    <h1 class="text-4xl font-extrabold text-[#263238] mb-4 text-center">Rate Your Freshmo Experience! ⭐✍️✨</h1>
+    <p class="text-lg leading-relaxed text-[#455A64] mb-8 text-center">Your feedback helps us grow and serve you better. Please share your thoughts! 🌟😊</p>
 
-    <form method="POST" class="rate-us-form">
-        <div class="form-group">
-            <label for="product">Product (Optional) 📦</label>
-            <input type="text" id="product" name="product" placeholder="Enter product name">
+    <form method="POST" class="rate-us-form bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5] max-w-lg mx-auto">
+        <div class="mb-4">
+            <label for="product" class="block text-md font-semibold text-[#263238] mb-2">Product (Optional) 📦</label>
+            <input type="text" id="product" name="product" placeholder="Enter product name" class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]">
         </div>
-        <div class="form-group">
-            <label for="rating">Your Rating * ⭐</label>
-            <select id="rating" name="rating" required>
-                <option value="" disabled selected>Select rating</option>
-                <option value="5">★★★★★</option>
-                <option value="4">★★★★</option>
-                <option value="3">★★★</option>
-                <option value="2">★★</option>
-                <option value="1">★</option>
+        <div class="mb-4">
+            <label for="rating" class="block text-md font-semibold text-[#263238] mb-2">Your Rating * ⭐</label>
+            <select id="rating" name="rating" required class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5] bg-white text-gray-700">
+                <option value="" disabled selected>Select rating...</option>
+                <option value="5">★★★★★ Amazing! ✨</option>
+                <option value="4">★★★★ Great! 👍</option>
+                <option value="3">★★★ Good 😊</option>
+                <option value="2">★★ Fair 😐</option>
+                <option value="1">★ Poor 😞</option>
             </select>
         </div>
-        <div class="form-group">
-            <label for="review">Your Review * 💬</label>
-            <textarea id="review" name="review" required placeholder="Share your experience"></textarea>
+        <div class="mb-4">
+            <label for="review" class="block text-md font-semibold text-[#263238] mb-2">Your Review * 💬</label>
+            <textarea id="review" name="review" required placeholder="Share your experience with us!" rows="5" class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]"></textarea>
         </div>
-        <div class="form-group">
-            <label for="name">Your Name (Optional) 👤</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name">
+        <div class="mb-6">
+            <label for="name" class="block text-md font-semibold text-[#263238] mb-2">Your Name (Optional) 👤</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]">
         </div>
-        <button type="submit" class="btn">Submit Review ⭐🚀</button>
+        <button type="submit" class="btn bg-[#00BFA5] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-[#00897B] transition-colors duration-300 w-full">Submit Review ⭐🚀</button>
     </form>
 
-    <p>Your honest feedback is highly appreciated! Thank you for helping us grow. 🙏🌟</p>
-    <a href="{{ url_for('menus') }}" class="btn-back">Back to Products ⬅️🛍️</a>
+    <p class="mt-8 text-center text-lg leading-relaxed text-[#455A64]">Your honest feedback is highly appreciated! Thank you for helping us grow. 🙏🌟</p>
+    <p class="mt-4 text-center">
+        <a href="{{ url_for('menus') }}" class="btn-back inline-block bg-[#00BFA5] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#00897B] transition-all duration-300 ease-in-out transform hover:scale-105">Back to Products ⬅️🛍️</a>
+    </p>
 </section>
 {% endblock %}

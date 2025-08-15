@@ -1,25 +1,43 @@
 {% extends "base.html" %}
-{% block title %}About Freshmo Brands - Our Story 🇿🇦💧{% endblock %}
+{% block title %}About Freshmo Brands - Our Story 🇿🇦💧📖{% endblock %}
 {% block content %}
-    <section class="products-section">
-        <p><a href="{{ url_for('home') }}" class="btn-back">Back to Home ⬅️</a></p>
-        <h1>Our Story: Freshmo Brands 🇿🇦💧</h1>
-        <p>Discover the journey of Freshmo – from a personal need to a pioneering South African brand.</p>
-        <h2>The Genesis: A Personal Journey to Freshness ✨</h2>
-        <p>Freshmo Brands (Pty) Ltd was founded in 2014 by Paul Masilo, an entrepreneur with over two decades of business administration experience. The idea for Freshmo, initially "Instant Refresher," was born in 2016 from Paul's personal challenge: maintaining fresh breath during a 40-day liquid-only fast when traditional oral hygiene was impractical. Inspired by everyday sachet packaging, he envisioned a convenient, on-the-go mouthwash. This personal need sparked a revolution in oral care!</p>
-        <h2>Proudly South African Innovation 🇿🇦</h2>
-        <p>Freshmo is not just a product; it's a symbol of local innovation. We are the first black-owned and township-based company in Africa to produce mouthwash in sachets! Our brand is proudly endorsed by the "Proudly South African" campaign, signifying our commitment to local manufacturing, job creation, and adherence to international quality standards. Supporting Freshmo means supporting local growth and empowerment!</p>
-        <h2>Scientific Backing & Uncompromised Quality 🔬✅</h2>
-        <p>Our proprietary mouthwash formula was developed under the expert guidance of Professor David Katerere from Tshwane University of Technology. It underwent rigorous SABS testing in partnership with the University of Limpopo, even pioneering a new local testing standard! Freshmo Mouthwash is alcohol-free, has a two-year shelf life, and is a trademarked product, ensuring you receive only the highest quality for your oral health.</p>
-        <h2>Our Vision for the Future 🚀</h2>
-        <p>We are constantly innovating, with new flavors like Strawberry Mint, Apple, and Watermelon in development, along with biodegradable toothbrushes and traveler's packs. Our ambition extends beyond South Africa, with plans to bring "Freshness on the Go" to other SADC countries!</p>
-        <p>Freshmo is committed to creating local employment opportunities and contributing positively to our community. We believe in empowering local talent and building a sustainable future, one sachet at a time.</p>
-        <h2>Contact Us</h2>
-        <p>Email: <a href="mailto:freshmobrands@outlook.com">freshmobrands@outlook.com</a></p>
-        <p>Contact: Paul Masilo, <a href="tel:+27842737821">+27842737821</a></p>
-        <p>WhatsApp: <a href="https://wa.me/27842737821">Chat with us!</a></p>
-        <p>Website: <a href="https://freshmo.co.za">https://freshmo.co.za</a></p>
-        <p>Address: 27 Parakeet Street, Villa Lisa, Boksburg, 1459, South Africa 📍</p>
-        <p><a href="{{ url_for('menus') }}" class="btn">Explore Our Products ➡️</a></p>
+    <section class="products-section p-6 bg-white rounded-lg shadow-lg border border-[#00BFA5] my-8">
+        <p class="mb-4"><a href="{{ url_for('home') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back to Home ⬅️🏠</a></p>
+        <h1 class="text-4xl font-extrabold text-[#263238] mb-4 text-center">Our Story: Freshmo Brands 🇿🇦💧✨</h1>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-8 text-center">Discover the journey of Freshmo – from a personal need to a pioneering South African brand. 🌟</p>
+        
+        <h2 class="text-3xl font-bold text-[#00897B] mb-4">The Genesis: A Personal Journey to Freshness ✨🌿</h2>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-6">
+            Freshmo Brands (Pty) Ltd was founded in 2014 by Paul Masilo, an entrepreneur with over two decades of business administration experience. 💼 The idea for Freshmo, initially "Instant Refresher," was born in 2016 from Paul's personal challenge: maintaining fresh breath during a 40-day liquid-only fast when traditional oral hygiene was impractical. 🧘‍♂️ Inspired by everyday sachet packaging, he envisioned a convenient, on-the-go mouthwash. 🎒 This personal need sparked a revolution in oral care! 🚀
+        </p>
+        
+        <h2 class="text-3xl font-bold text-[#00897B] mb-4">Proudly South African Innovation 🇿🇦❤️</h2>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-6">
+            Freshmo is not just a product; it's a symbol of local innovation. We are the first black-owned and township-based company in Africa to produce mouthwash in sachets! 🏭 Our brand is proudly endorsed by the "Proudly South African" campaign, signifying our commitment to local manufacturing, job creation, and adherence to international quality standards. 🏆 Supporting Freshmo means supporting local growth and empowerment! 💪
+        </p>
+        
+        <h2 class="text-3xl font-bold text-[#00897B] mb-4">Scientific Backing & Uncompromised Quality 🔬✅👍</h2>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-6">
+            Our proprietary mouthwash formula was developed under the expert guidance of Professor David Katerere from Tshwane University of Technology. 🧑‍🔬 It underwent rigorous SABS testing in partnership with the University of Limpopo, even pioneering a new local testing standard! 🧪 Freshmo Mouthwash is alcohol-free, has a two-year shelf life, and is a trademarked product, ensuring you receive only the highest quality for your oral health. 🌟🦷
+        </p>
+        
+        <h2 class="text-3xl font-bold text-[#00897B] mb-4">Our Vision for the Future 🚀✨🌍</h2>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-6">
+            We are constantly innovating, with new flavors like Strawberry Mint 🍓🌱, Apple 🍎, and Watermelon 🍉 in development, along with biodegradable toothbrushes ♻️ and traveler's packs. ✈️ Our ambition extends beyond South Africa, with plans to bring "Freshness on the Go" to other SADC countries! 🌍🗺️
+        </p>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-8">
+            Freshmo is committed to creating local employment opportunities and contributing positively to our community. 🤝 We believe in empowering local talent and building a sustainable future, one sachet at a time. 🌱👷‍♀️👷‍♂️
+        </p>
+        
+        <h2 class="text-3xl font-bold text-[#00897B] mb-4">Contact Us 📞📧</h2>
+        <p class="text-lg text-[#455A64]">Email: <a href="mailto:freshmobrands@outlook.com" class="text-[#00897B] hover:underline">freshmobrands@outlook.com</a> 📧</p>
+        <p class="text-lg text-[#455A64]">Contact: Paul Masilo, <a href="tel:+27842737821" class="text-[#00897B] hover:underline">+27842737821</a> 📲</p>
+        <p class="text-lg text-[#455A64]">WhatsApp: <a href="https://wa.me/27842737821" class="text-[#00897B] hover:underline">Chat with us!</a> 💬</p>
+        <p class="text-lg text-[#455A64]">Website: <a href="https://freshmo.co.za" class="text-[#00897B] hover:underline">https://freshmo.co.za</a> 🌐</p>
+        <p class="text-lg text-[#455A64] mb-8">Address: 27 Parakeet Street, Villa Lisa, Boksburg, 1459, South Africa 📍🗺️</p>
+        
+        <p class="text-center">
+            <a href="{{ url_for('menus') }}" class="btn inline-block bg-[#00BFA5] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#00897B] transition-all duration-300 ease-in-out transform hover:scale-105">Explore Our Products ➡️🛍️</a>
+        </p>
     </section>
 {% endblock %}

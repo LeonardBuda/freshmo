@@ -1,36 +1,36 @@
 {% extends "base.html" %}
-{% block title %}FAQs - Freshmo Brands{% endblock %}
+{% block title %}FAQs - Freshmo Brands ❓💡😊{% endblock %}
 {% block content %}
-    <div class="container">
-        <p><a href="{{ url_for('menus') }}">Back to Products ⬅️</a></p>
-        <h1>Frequently Asked Questions 💧</h1>
-        <p>Find answers to common questions about our Freshmo products!</p>
-        <div class="faq-list">
-            <div class="faq-item">
-                <h3>What are Freshmo products made of?</h3>
-                <p>Our products are crafted with natural, eco-friendly ingredients to ensure freshness and sustainability. Our mouthwash is alcohol-free and formulated for antibacterial action.</p>
+    <section class="products-section p-6 bg-white rounded-lg shadow-lg border border-[#00BFA5] my-8">
+        <p class="mb-4"><a href="{{ url_for('menus') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back to Products ⬅️🛍️</a></p>
+        <h1 class="text-4xl font-extrabold text-[#263238] mb-4 text-center">Frequently Asked Questions 💧❓💡</h1>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-8 text-center">Find answers to common questions about our Freshmo products! 🤔🌟</p>
+        <div class="faq-list grid grid-cols-1 gap-6">
+            <div class="faq-item bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5]">
+                <h3 class="text-xl font-bold text-[#00897B] mb-2">What are Freshmo products made of? 🌿🔬</h3>
+                <p class="text-md leading-relaxed text-[#455A64]">Our products are crafted with natural, eco-friendly ingredients to ensure freshness and sustainability. Our mouthwash is alcohol-free and formulated for antibacterial action. 🌱🚫🦠</p>
             </div>
-            <div class="faq-item">
-                <h3>How do I use Freshmo Mouthwash Sachets?</h3>
-                <p>Simply tear open a sachet, pour into your mouth, swish for 30 seconds, and spit out. Perfect for on-the-go freshness!</p>
+            <div class="faq-item bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5]">
+                <h3 class="text-xl font-bold text-[#00897B] mb-2">How do I use Freshmo Mouthwash Sachets? 💧🎒</h3>
+                <p class="text-md leading-relaxed text-[#455A64]">Simply tear open a sachet, pour into your mouth, swish for 30 seconds, and spit out. Perfect for on-the-go freshness! 🚶‍♀️💨</p>
             </div>
-            <div class="faq-item">
-                <h3>Do you offer bulk discounts?</h3>
-                <p>Contact us for bulk order inquiries, and we’ll provide tailored pricing options.</p>
+            <div class="faq-item bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5]">
+                <h3 class="text-xl font-bold text-[#00897B] mb-2">Do you offer bulk discounts? 💰📦</h3>
+                <p class="text-md leading-relaxed text-[#455A64]">Contact us for bulk order inquiries, and we’ll provide tailored pricing options. 🤝📊</p>
             </div>
-            <div class="faq-item">
-                <h3>Is Freshmo mouthwash safe and tested?</h3>
-                <p>Yes, our mouthwash is rigorously tested by the South African Bureau of Standards (SABS) and developed with scientific expertise from Professor David Katerere at Tshwane University of Technology.</p>
+            <div class="faq-item bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5]">
+                <h3 class="text-xl font-bold text-[#00897B] mb-2">Is Freshmo mouthwash safe and tested? ✅🔬</h3>
+                <p class="text-md leading-relaxed text-[#455A64]">Yes, our mouthwash is rigorously tested by the South African Bureau of Standards (SABS) and developed with scientific expertise from Professor David Katerere at Tshwane University of Technology. 🧪🎓</p>
             </div>
-            <div class="faq-item">
-                <h3>What is the shelf life of Freshmo mouthwash?</h3>
-                <p>Our mouthwash has a two-year shelf life, ensuring long-lasting freshness and stability.</p>
+            <div class="faq-item bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5]">
+                <h3 class="text-xl font-bold text-[#00897B] mb-2">What is the shelf life of Freshmo mouthwash? 📅⏳</h3>
+                <p class="text-md leading-relaxed text-[#455A64]">Our mouthwash has a two-year shelf life, ensuring long-lasting freshness and stability. 🌟🔒</p>
             </div>
-            <div class="faq-item">
-                <h3>Why choose Freshmo’s sachet packaging?</h3>
-                <p>Our 10ml sachets are designed for portability and convenience, making oral hygiene easy for busy, on-the-go lifestyles.</p>
+            <div class="faq-item bg-[#E0F2F7] p-6 rounded-lg shadow-md border border-[#00BFA5]">
+                <h3 class="text-xl font-bold text-[#00897B] mb-2">Why choose Freshmo’s sachet packaging? 🎒✨</h3>
+                <p class="text-md leading-relaxed text-[#455A64]">Our 10ml sachets are designed for portability and convenience, making oral hygiene easy for busy, on-the-go lifestyles. 🏃‍♂️💨</p>
             </div>
         </div>
-        <p>Have More Questions? <a href="{{ url_for('contact') }}">Contact Us!</a> ➡️</p>
-    </div>
+        <p class="mt-8 text-center">Have More Questions? <a href="{{ url_for('contact') }}" class="text-[#00897B] hover:underline transition-colors duration-300">Contact Us! 📞➡️</a></p>
+    </section>
 {% endblock %}

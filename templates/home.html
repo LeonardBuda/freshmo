@@ -1,19 +1,69 @@
 {% extends "base.html" %}
-{% block title %}Welcome to Freshmo Brands! 🌟{% endblock %}
-{% block content %}
-<section class="hero">
-    <div class="hero-content">
-        <h1 class="welcome-text">Welcome to Freshmo Brands! 🎉</h1>
-        <p class="welcome-text">Your go-to for "Freshness on the Go" with our innovative sachet mouthwash! 💧</p>
-        <a href="{{ url_for('menus') }}" class="btn">Explore Our Products! ➡️🚀</a>
-    </div>
-</section>
+{% block title %}Welcome to Freshmo Brands! 💧✨🚀{% endblock %}
 
-<section class="products-section">
-    <h2>Why Choose Freshmo? 🤔✨</h2>
-    <p>Freshmo offers convenient, alcohol-free mouthwash in single-use sachets, perfect for your on-the-go lifestyle. Proudly South African and scientifically formulated for a fresh, clean mouth anytime, anywhere! 🇿🇦🌟</p>
-    <p>Combat bad breath, fight plaque, and promote healthy gums with our SABS-tested solution. 🦷👍</p>
-    <a href="{{ url_for('about') }}" class="btn">Learn more about us ✨📖</a>
-    <a href="{{ url_for('menus') }}" class="btn-back">View All Products ⬅️🛍️</a>
-</section>
+{% block content %}
+    <!-- Container for the home page content with a background image -->
+    <div class="relative w-full min-h-[60vh] bg-cover bg-center rounded-lg shadow-xl flex items-center justify-center p-8 text-center"
+         style="background-image: url('/static/images/image8.jpg');"> {# UPDATED: Using image8.jpg as background #}
+        <div class="absolute inset-0 bg-black opacity-50 rounded-lg"></div> <!-- Overlay for text readability -->
+        <div class="relative z-10 text-white">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 animate-fade-in-down text-white">
+                Welcome to Freshmo Brands! 💧✨🎉
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 leading-relaxed animate-fade-in-up text-white">
+                Your go-to for "Freshness on the Go" with our innovative sachet mouthwash! 🌬️🦷
+            </p>
+            <a href="{{ url_for('menus') }}"
+               class="inline-block bg-[#00BFA5] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#00897B] transition-all duration-300 ease-in-out transform hover:scale-105 animate-bounce-once">
+                Explore Our Products! ➡️🛍️🚀
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-10 p-6 bg-white rounded-lg shadow-lg border border-[#00BFA5] text-center">
+        <h2 class="text-3xl font-bold text-[#263238] mb-4">Why Choose Freshmo? 🤔✨</h2>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-4">
+            Freshmo offers convenient, alcohol-free mouthwash in single-use sachets, perfect for your on-the-go lifestyle. 🏃‍♀️🌍 Proudly South African and scientifically formulated for a fresh, clean mouth anytime, anywhere! 🇿🇦🌟
+        </p>
+        <p class="text-lg leading-relaxed text-[#455A64] mb-6">
+            Combat bad breath, fight plaque, and promote healthy gums with our SABS-tested solution. 🦷👍🌿
+        </p>
+        <a href="{{ url_for('about') }}"
+           class="inline-block mt-6 text-[#00897B] font-semibold text-lg hover:underline transition-colors duration-300">
+            Learn more about us ✨📖
+        </a>
+    </div>
+
+    <div class="mt-10 text-center">
+        <p>
+            <a href="{{ url_for('menus') }}" class="text-[#00897B] hover:underline transition-colors duration-300">View All Products ⬅️🛍️</a>
+        </p>
+    </div>
+
+    <style>
+        /* Custom animations for the home page */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounceOnce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .animate-fade-in-down {
+            animation: fadeInDown 1s ease-out forwards;
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        .animate-bounce-once {
+            animation: bounceOnce 2s ease-in-out; /* Slower, more subtle bounce */
+        }
+    </style>
 {% endblock %}
