@@ -25,8 +25,10 @@
                 <hr class="my-4 border-[#00BFA5]">
                 <p class="text-xl font-semibold text-[#263238]">Subtotal (Excl. VAT): R{{ subtotal_excl_vat|floatformat(2) }} 💸</p>
                 <p class="text-xl font-semibold text-[#263238]">Total VAT (15%): R{{ total_vat_amount|floatformat(2) }} 🧾</p>
-                {% if delivery_charge %}
+                {% if delivery_charge and delivery_charge > 0 %}
                     <p class="text-xl font-semibold text-[#263238]">Delivery Charge: R{{ delivery_charge|floatformat(2) }} 🚚</p>
+                {% elif remembered_customer.delivery_type == 'Courier Guy' %}
+                    <p class="text-xl font-semibold text-[#263238]">Delivery Charge: Subject to Quotation 📦</p>
                 {% endif %}
                 <p class="text-3xl font-extrabold text-[#00897B] mt-4"><strong>Grand Total (Incl. VAT): R{{ grand_total_incl_vat|floatformat(2) }} 💳</strong></p>
             </div>
@@ -43,19 +45,20 @@
                 <div class="mb-4">
                     <label for="delivery_type" class="block text-md font-semibold text-[#263238] mb-2">Delivery Type * 🚛</label>
                     <select id="delivery_type" name="delivery_type" required class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5] bg-white text-gray-700">
-                        <option value="Delivery" {% if remembered_customer.delivery_type == 'Delivery' %}selected{% endif %}>Delivery 🚚</option>
+                        <option value="Delivery" {% if remembered_customer.delivery_type == 'Delivery' %}selected{% endif %}>Local Delivery (R6/km) 🚚</option>
                         <option value="Collection" {% if remembered_customer.delivery_type == 'Collection' %}selected{% endif %}>Collection 🏬</option>
-                        <option value="PEP Stores" {% if remembered_customer.delivery_type == 'PEP Stores' %}selected{% endif %}>PEP Stores 🏪</option>
-                        <option value="Courier" {% if remembered_customer.delivery_type == 'Courier' %}selected{% endif %}>Courier 📦</option>
+                        <option value="PEP PAXI" {% if remembered_customer.delivery_type == 'PEP PAXI' %}selected{% endif %}>PEP PAXI (R60.00 incl. VAT) 🏪</option>
+                        <option value="Aramex" {% if remembered_customer.delivery_type == 'Aramex' %}selected{% endif %}>Aramex (R120.00 incl. VAT) ✈️</option>
+                        <option value="Courier Guy" {% if remembered_customer.delivery_type == 'Courier Guy' %}selected{% endif %}>Courier Guy (Subject to Quotation) 📦</option>
                     </select>
                 </div>
                 <div id="address_field_container" class="mb-4" style="display: {% if remembered_customer.delivery_type == 'Delivery' %}block{% else %}none{% endif %};">
                     <label for="address" class="block text-md font-semibold text-[#263238] mb-2">Delivery Address * 🏠</label>
                     <input type="text" id="address" name="address" value="{{ remembered_customer.address if remembered_customer else '' }}" {% if remembered_customer.delivery_type == 'Delivery' %}required{% endif %} class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]">
                 </div>
-                <div class="mb-4">
-                    <label for="special_note" class="block text-md font-semibold text-[#263238] mb-2">Special Note (Optional) 📝</label>
-                    <textarea id="special_note" name="special_note" rows="3" class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]"></textarea>
+                <div id="special_note_container" class="mb-4" style="display: {% if remembered_customer.delivery_type == 'Courier Guy' %}block{% else %}none{% endif %};">
+                    <label for="special_note" class="block text-md font-semibold text-[#263238] mb-2">Special Note (for Courier Guy quotation) * 📝</label>
+                    <textarea id="special_note" name="special_note" rows="3" class="block w-full p-2 border border-gray-300 rounded-md focus:ring-[#00BFA5] focus:border-[#00BFA5]" {% if remembered_customer.delivery_type == 'Courier Guy' %}required{% endif %} placeholder="Please provide details for the Courier Guy quotation (e.g., specific location, preferred delivery time, etc.)"></textarea>
                 </div>
                 <div class="mb-6">
                     <label for="payment_method" class="block text-md font-semibold text-[#263238] mb-2">Payment Method * 💳</label>
@@ -78,4 +81,42 @@
             <a href="{{ url_for('menus') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back to Products ⬅️🛍️</a>
         </p>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deliveryTypeSelect = document.getElementById('delivery_type');
+            const addressFieldContainer = document.getElementById('address_field_container');
+            const addressInput = document.getElementById('address');
+            const specialNoteContainer = document.getElementById('special_note_container');
+            const specialNoteTextarea = document.getElementById('special_note');
+
+            function toggleDeliveryFields() {
+                const selectedDeliveryType = deliveryTypeSelect.value;
+
+                // Toggle Address Field visibility and required attribute
+                if (selectedDeliveryType === 'Delivery') {
+                    addressFieldContainer.style.display = 'block';
+                    addressInput.setAttribute('required', 'required');
+                } else {
+                    addressFieldContainer.style.display = 'none';
+                    addressInput.removeAttribute('required');
+                    addressInput.value = ''; // Clear address if not delivery
+                }
+
+                // Toggle Special Note field for Courier Guy
+                if (selectedDeliveryType === 'Courier Guy') {
+                    specialNoteContainer.style.display = 'block';
+                    specialNoteTextarea.setAttribute('required', 'required');
+                } else {
+                    specialNoteContainer.style.display = 'none';
+                    specialNoteTextarea.removeAttribute('required');
+                    specialNoteTextarea.value = ''; // Clear special note if not Courier Guy
+                }
+            }
+
+            deliveryTypeSelect.addEventListener('change', toggleDeliveryFields);
+            // Call on page load to set initial state based on remembered customer or default
+            toggleDeliveryFields();
+        });
+    </script>
 {% endblock %}

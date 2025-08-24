@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Rate Us - Freshmo Brands ⭐✍️😊{% endblock %}
+{% block title %}Rate Us & Read Testimonials - Freshmo Brands ⭐✍️😊{% endblock %}
 {% block content %}
 <section class="products-section p-6 bg-white rounded-lg shadow-lg border border-[#00BFA5] my-8">
     <p class="mb-4"><a href="{{ url_for('menus') }}" class="btn-back text-[#00897B] hover:underline transition-colors duration-300">Back to Products ⬅️🛍️</a></p>
@@ -34,7 +34,54 @@
     </form>
 
     <p class="mt-8 text-center text-lg leading-relaxed text-[#455A64]">Your honest feedback is highly appreciated! Thank you for helping us grow. 🙏🌟</p>
-    <p class="mt-4 text-center">
+    
+    <div class="testimonials-section mt-12 p-6 bg-[#F1F8F9] rounded-lg shadow-xl border border-[#00BFA5]">
+        <h2 class="text-3xl font-extrabold text-[#263238] mb-6 text-center">What Our Customers Are Saying! 💖🗣️</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="testimonial-item bg-white p-6 rounded-lg shadow-md border border-[#C8E6C9]">
+                <p class="italic text-[#455A64] mb-4">"Hello Ntate I'm doing great thank you. And hey my customers are very happy that we've introduced Freshmo to them! There's this other lady who said she had bleeding gums problem caused by brushing but it all stopped since she started using Freshmo. Our people are happy!"</p>
+                <p class="font-semibold text-[#00897B]">- Happy Customer ✨🦷</p>
+            </div>
+            
+            <div class="testimonial-item bg-white p-6 rounded-lg shadow-md border border-[#C8E6C9]">
+                <p class="italic text-[#455A64] mb-4">"The people love mouthwash on the go. Plus, it's cheap. It's new and convenient."</p>
+                <p class="font-semibold text-[#00897B]">- Satisfied User 🚀💰</p>
+            </div>
+            
+            <div class="testimonial-item bg-white p-6 rounded-lg shadow-md border border-[#C8E6C9]">
+                <p class="italic text-[#455A64] mb-4">"Good evening, we are very happy with the mouthwash. I bought it for my mom because she has holes in her teeth which messes with her breath. These days her breath is fresh always."</p>
+                <p class="font-semibold text-[#00897B]">- Grateful Daughter 😊💖</p>
+            </div>
+            
+            <div class="testimonial-item bg-white p-6 rounded-lg shadow-md border border-[#C8E6C9]">
+                <p class="italic text-[#455A64] mb-4">"Good day. I absolutely love the taste, and this might be my favourite flavour, it’s refreshing and leaves my mouth feeling super clean! I also really appreciate how convenient the sachets are. I can easily pop one or two into my bag for work. Definitely a game changer!"</p>
+                <p class="font-semibold text-[#00897B]">- Enthusiastic User 🌟🎒</p>
+            </div>
+            
+            <div class="testimonial-item bg-white p-6 rounded-lg shadow-md border border-[#C8E6C9]">
+                <p class="italic text-[#455A64] mb-4">"Good afternoon ntate, hope you good. We travelled safely and we're well rested and ready for business. I've tested both the sachets, and I would like to attest that the new product is actually better tasting than the previous one."</p>
+                <p class="font-semibold text-[#00897B]">- Loyal Customer ✈️😋</p>
+            </div>
+            
+            <div class="testimonial-item bg-white p-6 rounded-lg shadow-md border border-[#C8E6C9]">
+                <p class="italic text-[#455A64] mb-4">"Good morning Mr. Masilo. Freshmo mouthwash its workings nice I'm looking forward into using your product. It keeps my mouth smelling fresh."</p>
+                <p class="font-semibold text-[#00897B]">- Officer Sithole 👮‍♀️👍</p>
+            </div>
+
+            <div class="testimonial-item bg-white p-6 rounded-lg shadow-md border border-[#C8E6C9]">
+                <p class="italic text-[#455A64] mb-4">"Tested the new flavour. It is amazing it really leaves my mouth feeling fresh and clean."</p>
+                <p class="font-semibold text-[#00897B]">- Flavor Fanatic 🤩洁</p>
+            </div>
+
+            <div class="testimonial-item bg-white p-6 rounded-lg shadow-md border border-[#C8E6C9]">
+                <p class="italic text-[#455A64] mb-4">"Good day Ntate. Freshmo is the best. It's so refreshing, gentle and even safe to be used by the young ones. I would recommend it to anyone old and young. I just love it."</p>
+                <p class="font-semibold text-[#00897B]">- Family Approved! 👨‍👩‍👧‍👦💖</p>
+            </div>
+        </div>
+    </div>
+
+    <p class="mt-8 text-center">
         <a href="{{ url_for('menus') }}" class="btn-back inline-block bg-[#00BFA5] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#00897B] transition-all duration-300 ease-in-out transform hover:scale-105">Back to Products ⬅️🛍️</a>
     </p>
 </section>

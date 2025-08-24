@@ -184,16 +184,16 @@ def create_app():
     # --- Products and Colors (Moved inside create_app) ---
     PRODUCTS = [
         # Mouthwash Sachets
-        {'id': 'sm-single', 'name': 'Strawberry Mint Single Sachet', 'category': 'Mouthwash Sachets', 'price_excl_vat': 9.00, 'type': 'single'},
-        {'id': 'sm-box', 'name': 'Strawberry Mint Box (30 Sachets)', 'category': 'Mouthwash Sachets', 'price_excl_vat': 210.00, 'type': 'box'},
-        {'id': 'sm-bulk', 'name': 'Strawberry Mint Bulk Box (10 Boxes)', 'category': 'Mouthwash Sachets', 'price_excl_vat': 1800.00, 'type': 'bulk_box'},
+        {'id': 'sm-single', 'name': 'Strawberry Mint Single Sachet', 'category': 'Mouthwash Sachets', 'price_excl_vat': 9.00, 'type': 'single', 'image_url': 'strawberry_mint_single_sachet.jpg'},
+        {'id': 'sm-box', 'name': 'Strawberry Mint Box (30 Sachets)', 'category': 'Mouthwash Sachets', 'price_excl_vat': 210.00, 'type': 'box', 'image_url': 'strawberry_mint_box.jpg'},
+        {'id': 'sm-bulk', 'name': 'Strawberry Mint Bulk Box (10 Boxes)', 'category': 'Mouthwash Sachets', 'price_excl_vat': 1800.00, 'type': 'bulk_box', 'image_url': 'strawberry_mint_bulk_box.jpg'},
 
         # Oral Care Accessories
-        {'id': 'bamboo-toothbrush', 'name': 'Biodegradable Bamboo Toothbrush', 'category': 'Oral Care Accessories', 'price_excl_vat': 45.00, 'colors': ['green', 'orange', 'purple', 'grey', 'blue']},
-        {'id': 'bamboo-toothbrush-box', 'name': 'Biodegradable Bamboo Toothbrush Box (10 Pcs)', 'category': 'Oral Care Accessories', 'price_excl_vat': 350.00, 'colors': ['green', 'orange', 'purple', 'grey', 'blue']},
+        {'id': 'bamboo-toothbrush', 'name': 'Biodegradable Bamboo Toothbrush', 'category': 'Oral Care Accessories', 'price_excl_vat': 45.00, 'colors': ['green', 'orange', 'purple', 'grey', 'blue'], 'image_url': 'biodegradable_bamboo_toothbrush.jpg'},
+        {'id': 'bamboo-toothbrush-box', 'name': 'Biodegradable Bamboo Toothbrush Box (10 Pcs)', 'category': 'Oral Care Accessories', 'price_excl_vat': 350.00, 'colors': ['green', 'orange', 'purple', 'grey', 'blue'], 'image_url': 'biodegradable_bamboo_toothbrush_box.jpg'},
 
         # Combos
-        {'id': 'freshness-combo', 'name': 'Freshness Combo (Box + Toothbrush)', 'category': 'Combos', 'price_excl_vat': 225.00, 'toothbrush_colors': ['green', 'orange', 'purple', 'grey', 'blue']}
+        {'id': 'freshness-combo', 'name': 'Freshness Combo (Box + Toothbrush)', 'category': 'Combos', 'price_excl_vat': 225.00, 'toothbrush_colors': ['green', 'orange', 'purple', 'grey', 'blue'], 'image_url': 'freshness_combo.jpg'}
     ]
 
     # List of available toothbrush colors for dropdowns
@@ -527,7 +527,12 @@ def create_app():
         total_vat_amount = sum(item['total_vat_amount'] for item in cart_items)
         
         delivery_charge = 0.0
-        grand_total_incl_vat = subtotal_excl_vat + total_vat_amount # Initial total before delivery
+        # Define fixed delivery costs including VAT
+        PEP_PAXI_COST_INCL_VAT = 60.00
+        ARAMEX_COST_INCL_VAT = 120.00
+
+        # Initial total before delivery and other charges
+        grand_total_incl_vat = subtotal_excl_vat + total_vat_amount 
 
         remembered_customer = session.get('remembered_customer', {})
 
@@ -541,10 +546,30 @@ def create_app():
             payment_method = request.form.get('payment_method')
             special_note = request.form.get('special_note')
 
-            if customer_details['delivery_type'] == 'Delivery':
+            selected_delivery_type = customer_details['delivery_type']
+            if selected_delivery_type == 'Delivery': # Google Maps based delivery
                 origin = "27 Parakeet Street, Villa Lisa, Boksburg, 1459"
                 delivery_charge = calculate_delivery_charge(origin, customer_details['address'])
-                grand_total_incl_vat = subtotal_excl_vat + total_vat_amount + delivery_charge
+            elif selected_delivery_type == 'PEP PAXI':
+                delivery_charge = PEP_PAXI_COST_INCL_VAT
+            elif selected_delivery_type == 'Aramex':
+                delivery_charge = ARAMEX_COST_INCL_VAT
+            elif selected_delivery_type == 'Courier Guy':
+                delivery_charge = 0.0 # Subject to quotation, so no fixed charge here
+                if not special_note: # Encourage user to add note for Courier Guy
+                    flash("Please add a special note for Courier Guy quotation details. 📝", "warning")
+                    # It's better to render the page again with the existing data and flash message
+                    # rather than redirecting, to preserve form data if possible.
+                    return render_template('checkout.html', 
+                                           cart_items=cart_items, 
+                                           subtotal_excl_vat=subtotal_excl_vat,
+                                           total_vat_amount=total_vat_amount,
+                                           delivery_charge=delivery_charge, 
+                                           grand_total_incl_vat=grand_total_incl_vat, 
+                                           remembered_customer=remembered_customer)
+
+
+            grand_total_incl_vat = subtotal_excl_vat + total_vat_amount + delivery_charge
 
             order_number = get_next_order_number()
             order_data = {
@@ -580,10 +605,19 @@ def create_app():
                 flash(f"Order failed to place: {str(e)} 😢", 'error')
                 return redirect(url_for('checkout'))
 
-        # Recalculate delivery charge if remembered customer is delivery type on GET request
-        if remembered_customer and remembered_customer.get('delivery_type') == 'Delivery':
-            origin = "27 Parakeet Street, Villa Lisa, Boksburg, 1459"
-            delivery_charge = calculate_delivery_charge(origin, remembered_customer.get('address', ''))
+        # On GET request or if form validation fails, recalculate delivery charge
+        if remembered_customer and remembered_customer.get('delivery_type'):
+            selected_delivery_type_on_get = remembered_customer.get('delivery_type')
+            if selected_delivery_type_on_get == 'Delivery':
+                origin = "27 Parakeet Street, Villa Lisa, Boksburg, 1459"
+                delivery_charge = calculate_delivery_charge(origin, remembered_customer.get('address', ''))
+            elif selected_delivery_type_on_get == 'PEP PAXI':
+                delivery_charge = PEP_PAXI_COST_INCL_VAT
+            elif selected_delivery_type_on_get == 'Aramex':
+                delivery_charge = ARAMEX_COST_INCL_VAT
+            elif selected_delivery_type_on_get == 'Courier Guy':
+                delivery_charge = 0.0 # No fixed charge, handled by quotation
+            
             grand_total_incl_vat = subtotal_excl_vat + total_vat_amount + delivery_charge
 
         return render_template('checkout.html', 
